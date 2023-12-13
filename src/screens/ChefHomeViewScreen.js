@@ -28,7 +28,7 @@ import FeedbackCard from "../components/FeedbackCard";
 const ChefHomeViewScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { kitchenId } = route.params;
-  console.log("item meal", kitchenId);
+  console.log("kitchen id", kitchenId);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "first", title: "Menu In Day" },

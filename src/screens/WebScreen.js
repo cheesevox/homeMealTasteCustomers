@@ -43,7 +43,7 @@ const WebScreen = ({ route, navigation }) => {
           Toast.show({
             type: "success",
             text1: "Home Meal Taste",
-            text2: "Rechared Tracsaction Successfully.",
+            text2: "Rechard Tracsaction Successfully.",
           });
         } else if(responseCode === "24"){
           navigation.navigate("UserProfile");
