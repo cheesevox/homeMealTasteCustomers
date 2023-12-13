@@ -36,6 +36,7 @@ export default function PrivacyScreen({ navigation }) {
       >
         {business.map((item, index) => (
           <View
+          key={index}
             style={{
               display: "flex",
               flexDirection: "column",
