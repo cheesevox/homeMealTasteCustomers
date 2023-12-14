@@ -27,17 +27,12 @@ const WebScreen = ({ route, navigation }) => {
         // console.log("REPOSSSSSSSSSSSSS L:Ink" , isResponseLink)
         const urlSearchParams = new URLSearchParams(navState.url);
         const responseCode = urlSearchParams.get("vnp_ResponseCode");
-        // if (isInitialURL && isBackNavigation) {
-        // console.log("Current URL:", navState.url);
-        //   navigation.goBack();
-        // }else if (isResponseLink) {
-        // console.log("Current URL:", navState.url);
-        //   navigation.goBack();
-        // }
         if (isInitialURL && isBackNavigation) {
           navigation.goBack();
         } else if (responseCode === "00") {
-          // Navigate back to the previous screen when vnp_ResponseCode is '00'
+          // Navigate back to the previous screen when vnp_ResponseCode is 00
+          navigation.navigate("UserProfile");
+        } else if(responseCode === "24"){
           navigation.goBack();
         }
       }}

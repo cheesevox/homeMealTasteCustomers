@@ -126,7 +126,7 @@ export const getAllSessionByAreaId = async (id) => {
 export const getAllSessionByAreaIdchef = async (id) => {
   try {
     const response = await axios.get(
-      `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id?areaid=${id}`
+      `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
       // `https://homemealtaste.azurewebsites.net/api/Session/get-all-session-by-area-id-with-status-true?areaid=${id}`
     );
     return response.data;
@@ -166,14 +166,11 @@ export const getDishByMealId = async (id) => {
 };
 export const createOrderUser = async (values) => {
   console.log("values creaorder ///////////////", values);
-  try {
     const response = await axios.post(
       "https://homemealtaste.azurewebsites.net/api/Order/create-order",
       values
     );
-  } catch (error) {
-    console.log("create order", error);
-  }
+    return response.data
 };
 
 export const getAllOrderByCutomerId = async (id) => {
@@ -516,7 +513,7 @@ export const getAllApprovedMealSessionBySessionId = async (id) => {
 export const getKitchenByKitchenId = async (id) => {
   try {
     const response = await axios.get(
-      `https://homemealtaste.azurewebsites.net/api/Kitchen/get-all-kitchen-by-kitchen-id?id=${id}`
+      `https://homemealtaste.azurewebsites.net/api/Kitchen/get-single-kitchen-by-kitchen-id?id=${id}`
     );
     return response.data;
   } catch (error) {

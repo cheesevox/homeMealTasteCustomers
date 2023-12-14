@@ -21,7 +21,7 @@ const OrderScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user.user);
 
   const fectOrderByCustomerId = () => {
-    getAllOrderByCutomerId(user.userId).then((res) => {
+    getAllOrderByCutomerId(user.customerId).then((res) => {
       setOrder(res);
     });
   };
@@ -36,6 +36,8 @@ const OrderScreen = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  console.log("ORRRRRRR", order)
 
   return (
     <SafeAreaView style={styles.container}>

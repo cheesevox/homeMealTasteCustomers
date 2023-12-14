@@ -25,7 +25,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [profile, setProfile] = useState();
-
+console.log("USERRRRRR",user)
   const fectProfileByCustomerId = () => {
     getUserByID(user?.userId).then((res) => {
       setProfile(res);

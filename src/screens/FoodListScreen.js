@@ -110,7 +110,7 @@ const FoodListScreen = ({ navigation, route }) => {
               justifyContent: "flex-end",
             }}
           >
-            <Ionicons size={35} name="notifications-outline" color={"white"} />
+            <Ionicons size={35} name="notifications-outline" color={"orange"} />
           </View>
           <View>
             <Text

@@ -29,16 +29,18 @@ const OrderCartScreen = ({ navigation, route }) => {
   });
   const createOrder = () => {
     createOrderUser({ ...values, quantity: quantity })
-      .then(() => {
+      .then((res) => {
+        console.log("RESSSSSSSSSSSS", res)
         Toast.show({
           type: "success",
           text1: "Home Meal Taste",
           text2: "Create Order Completed.",
         });
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log("ERRRRRRRRR", err)
         Toast.show({
-          type: "success",
+          type: "error",
           text1: "Home Meal Taste",
           text2: "Create Order Failed.",
         });
@@ -119,14 +121,16 @@ const OrderCartScreen = ({ navigation, route }) => {
   };
   return (
     <SafeAreaView style={{ backgroundColor: "#F2F2F2", flex: 1 }}>
-      <HeaderComp label="Cart" onBack={() => navigation.goBack()} />
+      <HeaderComp label="Cart" />
       <ScrollView
         style={{
           padding: 20,
         }}
       >
-        {item === undefined ? null : quantity === 0 ? (
-          ""
+        {item === undefined ? (
+          // ""
+          <Text> You Wanna Food ?</Text>
+          // <Image source={require}/>
         ) : (
           <CartCard item={item} />
         )}
