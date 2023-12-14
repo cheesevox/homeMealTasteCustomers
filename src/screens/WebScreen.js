@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { WebView } from "react-native-webview";
 import 'react-native-url-polyfill/auto';
+import Toast from "react-native-toast-message";
 
 const WebScreen = ({ route, navigation }) => {
   const { link } = route.params;
@@ -30,10 +31,29 @@ const WebScreen = ({ route, navigation }) => {
         if (isInitialURL && isBackNavigation) {
           navigation.goBack();
         } else if (responseCode === "00") {
+<<<<<<< HEAD
           // Navigate back to the previous screen when vnp_ResponseCode is 00
           navigation.navigate("UserProfile");
         } else if(responseCode === "24"){
           navigation.goBack();
+=======
+          // Navigate back to the previous screen when vnp_ResponseCode is '00'
+          navigation.navigate("UserProfile");
+          Toast.show({
+            type: "success",
+            text1: "Home Meal Taste",
+            text2: "Rechard Tracsaction Successfully.",
+          });
+        } else if(responseCode === "24"){
+          navigation.navigate("UserProfile");
+          Toast.show({
+            type: "error",
+            text1: "Home Meal Taste",
+            text2: "Fail Tracsaction Successfully.",
+          });
+        }else{
+          navigation.goBack()
+>>>>>>> cd5e17eb99d83fde63a3be114a16c154c57694cf
         }
       }}
     />

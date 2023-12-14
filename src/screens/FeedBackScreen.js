@@ -31,6 +31,7 @@ export default function FeedBackScreen({ navigation, route }) {
   };
   const { item } = route.params;
   console.log("Item là", item);
+  console.log("fedddddddddddddddbackkkkkkkkkkkk",item?.mealSessionDto2?.mealDto2?.kitchenDto2?.kitchenId)
   const [feedback, setfeedback] = useState([]);
   const fectAllFeedbackByKitchenId = () => {
     getAllFeedbackByKitchenId(

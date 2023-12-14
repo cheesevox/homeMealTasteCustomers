@@ -543,3 +543,29 @@ export const getAllTransactionByUserId = async (id) => {
     console.log("Error at get all transaction", error);
   }
 };
+
+export const updateProfile = async (values) => {
+  console.log("values for updating profile:", values);
+
+  try {
+    const response = await axios.put(
+      "https://homemealtaste.azurewebsites.net/api/User/update-profile-chef",
+      values
+    );
+
+    // Log the response data for debugging
+    console.log("Update Profile Response:", response.data);
+
+    if (response.status === 200) {
+      console.log("Update successful.");
+    } else {
+      console.error("Update failed. Unexpected status code:", response.status);
+    }
+  } catch (error) {
+    console.error("Error updating profile:", error.message);
+    console.error("Error details:", error.response);
+
+    // Log the entire error object for more information
+    console.error("Full error object:", error);
+  }
+};
