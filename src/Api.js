@@ -1,30 +1,37 @@
 import axios from "axios";
 import { RouteName } from "./Constant";
-export const login = async (values, navigation, Toast) => {
+
+export const login = async (values, navigation,Toast) =>{
   console.log(values);
   try {
     const response = await axios.post(
       `https://homemealtaste.azurewebsites.net/api/User/login`,
       values
     );
-    // dispatch(getUserInfor(response.data));
+
     if (response.data) {
-      console.log("role", response.data);
+      console.log("REPSSSSSSSSSSssss", response.data)
+      console.log("role",response.data.roleId)
       const roleId = response.data.roleId;
-      if (roleId === 2) {
-        await navigation.navigate("CustomerHome", { user: response.data });
-        Toast?.show({
-          type: "success",
-          text1: "Home Meal Taste",
-          text2: "This is some something 👋",
-        });
+      const userId = response.data.userId
+      const status = response.data.status
+      if (roleId === 3) {
+        navigation.navigate("Login", { loginFailure: true });
+      } else if (roleId === 2) {
+        if(status == true){
+        navigation.navigate(`CustomerHome`, {user:response.data});
+        } else{
+          Toast.show({
+            type:"error",
+            text1:"Home Meal Taste",
+            text2:"Your account is ban!"
+          })
+        }
+      } else {
+        console.log("Unknown roleId:", roleId);
       }
     } else {
-      Toast?.show({
-        type: "error",
-        text1: "Home Meal Taste",
-        text2: "Login Failed.Check Your Credentials. 👋",
-      });
+      console.log("No data in the response");
     }
   } catch (error) {
     console.log("Error in login", error);

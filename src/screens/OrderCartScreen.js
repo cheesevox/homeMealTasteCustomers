@@ -21,6 +21,7 @@ import HeaderComp from "./HeaderComp";
 const OrderCartScreen = ({ navigation, route }) => {
   const { item } = route.params || {};
   const user = useSelector((state) => state.user.user);
+  console.log("user.customerIduser.customerIduser.customerId",user.customerId)
   const [quantity, setQuantity] = useState(1);
   const [values, setValues] = useState({
     customerId: user.customerId,

@@ -7,18 +7,17 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import ToastMessage from "../components/ToastMessage";
 import { useRef } from "react";
 import { login } from "../Api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserInfor } from "../../slices/userSlice";
-import { useRoute, useEffect } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
-const LoginScreen = ({ navigation }) => {
-  const route = useRoute();
-  const user = route.params?.user || null;
+const LoginScreen = ({ navigation,route }) => {
+    const user = useSelector((state)=>state.user.user)
+
   const dispatch = useDispatch();
   // collect data
   const [phone, setPhone] = useState("");
@@ -29,13 +28,39 @@ const LoginScreen = ({ navigation }) => {
     password: null,
   });
   const Login = () => {
-    setLoading(true);
     login(values, navigation, Toast)
       .then((res) => {
-        setLoading(false);
+        dispatch(getUserInfor(res));
+        setValues({
+          ...values,
+          phone: null,
+          password: null
+        })
       })
       .catch((res) => console.log("that bai get api", res));
   };
+
+  const [toastType, setToastType] = useState("success");
+  const toastRef = useRef(null);
+  const { loginFailure } = route.params || {};
+
+  const handleShowToast = () => {
+    if (toastRef.current) {
+      toastRef.current.show();
+    }
+  };
+
+  useEffect(() => {
+    // Check if the logout parameter is true and clear inputs
+    if (route.params && route.params.logout) {
+      setValues({
+        ...values,
+        phone: "",
+        password: ""
+      })
+    }
+  }, [route.params]);
+
   return (
     <View
       style={{
@@ -47,9 +72,18 @@ const LoginScreen = ({ navigation }) => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 30,
+          marginTop: 50,
         }}
       >
+        <ToastMessage
+          type={toastType}
+          text="Login successfuly"
+          description="Login succes"
+          ref={toastRef}
+        />
+        {loginFailure && (
+          <Text style={{ textAlign: 'left' }}>Login failed. Please try again.</Text>
+        )}
         <Image
           source={require("../../assets/images/loginimage.png")}
           style={{
@@ -109,6 +143,7 @@ const LoginScreen = ({ navigation }) => {
             }}
             placeholder="Your Phone Numbers"
             width={280}
+            value={values.phone}
             onChangeText={(text) =>
               setValues({
                 ...values,
@@ -138,6 +173,7 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Your Password"
             secureTextEntry
             width={280}
+            value={values.password}
             onChangeText={(text) =>
               setValues({
                 ...values,
@@ -219,7 +255,7 @@ const LoginScreen = ({ navigation }) => {
 
   //button login
   const onClickLogin = () => {
-	navigation.navigate(RouteName.CHEF_HOME);
+  navigation.navigate(RouteName.CHEF_HOME);
     // if (phone.length == 0 || password.length == 0) {
     //   navigation.navigate("CustomerHome");
     //   return console.log("Please enter login infomation");
