@@ -128,9 +128,16 @@ const OrderCartScreen = ({ navigation, route }) => {
         }}
       >
         {item === undefined ? (
-          // ""
-          <Text> You Wanna Food ?</Text>
-          // <Image source={require}/>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("CustomerHome", { user: user })
+              }}
+            >
+              <Text style={{ padding: 20 }}> You Wanna Food ?</Text>
+              <Image source={require("../../assets/images/tray.png")} style={{ height: 150, width: 150 }} />
+            </TouchableOpacity>
+          </View>
         ) : (
           <CartCard item={item} />
         )}

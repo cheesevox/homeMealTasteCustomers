@@ -156,7 +156,7 @@ const FoodListScreen = ({ navigation, route }) => {
               justifyContent: "center",
               alignItems: "center",
               padding: 20,
-              bottom: -40,
+              // bottom: -40,
             }}
           >
             <View
@@ -188,7 +188,6 @@ const FoodListScreen = ({ navigation, route }) => {
             </View>
           </View>
         </View>
-
         {/* sessiion filter */}
       </View>
       <View style={{ marginVertical: 50, padding: 10, height: "60%" }}>

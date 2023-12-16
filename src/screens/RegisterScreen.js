@@ -6,40 +6,74 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { Dropdown } from "react-native-element-dropdown";
+import { createUserCustomer, getAllDistrict } from "../Api";
+import Toast from "react-native-toast-message";
 
 const RegisterScreen = ({ navigation }) => {
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [username, setUserName] = useState("");
+  // const [email, setEmail] = useState("");
 
-  const onChagePhone = (value) => {
-    setPhone(value);
-  };
-  const onChagePassword = (value) => {
-    setPassword(value);
-  };
-  const onChageUserName = (value) => {
-    setUserName(value);
-  };
-  const onChageEmail = (value) => {
-    setEmail(value);
-  };
+  const [values, setValues] = useState({
+    name: "",
+    username: "",
+    password: "",
+    email: "",
+    phone: "",
+    address: "",
+    districtId: districtId,
+    areaId: 1,
+    status: true
+  });
+
+  const [district, setDistrict] = useState([]);
+  const [districtId, setDistrictId] = useState(1);
+  const [isFocus, setIsFocus] = useState(false);
+
+  useEffect(() => {
+    getAllDistrict().then((ref) => {
+      console.log(ref);
+      setDistrict(ref);
+    });
+  }, []);
+  // const onChagePhone = (value) => {
+  //   setPhone(value);
+  // };
+  // const onChagePassword = (value) => {
+  //   setPassword(value);
+  // };
+  // const onChageUserName = (value) => {
+  //   setUserName(value);
+  // };
+  // const onChageEmail = (value) => {
+  //   setEmail(value);
+  // };
 
   const onClickRegister = () => {
-    if (phone.length == 0 || password.length == 0) {
-      return console.log("Please enter Regiter infomation");
-    } else {
+    // if (value.length == 0 || password.length == 0) {
+    //   return console.log("Please enter Regiter infomation");
+    // } else {
+      createUserCustomer({ ...values, districtId: districtId })
+      .then((res) => {
+        console.log("RESSSSSSSSSSSS", res)
+        Toast.show({
+          type: "success",
+          text1: "Home Meal Taste",
+          text2: "Create Account Completed.",
+        });
+      })
       navigation.navigate("Login");
-    }
-    console.log("Click regiter", {
-      phone,
-      password,
-      username,
-      email,
-    });
+    // }
+    // console.log("Click regiter", {
+    //   phone,
+    //   password,
+    //   username,
+    //   email,
+    // });
   };
   return (
     <View style={{ marginTop: 30 }}>
@@ -89,8 +123,14 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               width={280}
               placeholder="Your Phone Numbers"
-              value={phone}
-              onChangeText={onChagePhone}
+              // value={phone}
+              onChangeText={
+                (text) =>
+                setValues({
+                  ...values,
+                  phone: text,
+                })
+              }
             ></TextInput>
           </View>
         </View>
@@ -112,9 +152,15 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               width={280}
               placeholder="Your Password"
-              value={password}
+              // value={password}
               secureTextEntry={true}
-              onChangeText={onChagePassword}
+              onChangeText={
+                (text) =>
+                setValues({
+                  ...values,
+                  password: text,
+                })
+              }
             ></TextInput>
           </View>
         </View>
@@ -137,9 +183,15 @@ const RegisterScreen = ({ navigation }) => {
           <View style={{ padding: 20 }}>
             <TextInput
               width={280}
-              placeholder="Your Name"
-              value={username}
-              onChangeText={onChageUserName}
+              placeholder="Your User Name"
+              // value={username}
+              onChangeText={
+                (text) =>
+                setValues({
+                  ...values,
+                  username: text,
+                })
+              }
             ></TextInput>
           </View>
         </View>
@@ -161,16 +213,55 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               width={280}
               placeholder="Your Email"
-              value={email}
-              onChangeText={onChageEmail}
+              // value={email}
+              onChangeText={
+                (text) =>
+                setValues({
+                  ...values,
+                  email: text,
+                })
+              }
             ></TextInput>
           </View>
         </View>
+
+        <View
+              style={{
+                width: "83.5%",
+                padding:10,
+                marginHorizontal:40,
+                marginVertical:20,
+                borderWidth:1,
+                borderRadius: 15,
+                borderColor: "grey",
+              }}
+            >
+              <Dropdown
+                fontFamily="Poppins"
+                containerStyle={{
+                  borderRadius: 20,
+                  width: "100%",
+                  overflow: "hidden",
+                  top: 15,
+                }}
+                data={district}
+                labelField="districtName"
+                valueField="districtId"
+                searchPlaceholder="Search..."
+                value={districtId}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(value) => {
+                  setDistrictId(value.districtId);
+                  // router.refesh
+                }}
+              />
+            </View>
       </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Text
           style={{
-            marginTop: 50,
+            marginTop: 20,
             justifyContent: "center",
             alignItems: "center",
             paddingLeft: 50,
@@ -209,7 +300,6 @@ const RegisterScreen = ({ navigation }) => {
             Regiter
           </Text>
         </TouchableOpacity>
-      </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Text style={{ marginTop: 50 }}>Already Have Account ?</Text>
         <View>
@@ -225,6 +315,7 @@ const RegisterScreen = ({ navigation }) => {
             <Text style={{ color: "black", fontWeight: "500" }}>Login</Text>
           </TouchableOpacity>
         </View>
+      </View>
       </View>
     </View>
   );

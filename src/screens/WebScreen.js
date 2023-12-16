@@ -31,13 +31,6 @@ const WebScreen = ({ route, navigation }) => {
         if (isInitialURL && isBackNavigation) {
           navigation.goBack();
         } else if (responseCode === "00") {
-<<<<<<< HEAD
-          // Navigate back to the previous screen when vnp_ResponseCode is 00
-          navigation.navigate("UserProfile");
-        } else if(responseCode === "24"){
-          navigation.goBack();
-=======
-          // Navigate back to the previous screen when vnp_ResponseCode is '00'
           navigation.navigate("UserProfile");
           Toast.show({
             type: "success",
@@ -52,8 +45,7 @@ const WebScreen = ({ route, navigation }) => {
             text2: "Fail Tracsaction Successfully.",
           });
         }else{
-          navigation.goBack()
->>>>>>> cd5e17eb99d83fde63a3be114a16c154c57694cf
+          // navigation.goBack()
         }
       }}
     />

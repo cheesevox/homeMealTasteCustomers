@@ -6,7 +6,6 @@ import { store } from "./store";
 import Toast from "react-native-toast-message";
 import { AppRegistry } from "react-native";
 import { useEffect } from "react";
-import messaging from "@react-native-firebase/messaging";
 import * as Font from "expo-font";
 export default function App() {
   // useEffect(() => {

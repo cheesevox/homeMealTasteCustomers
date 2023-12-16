@@ -569,3 +569,12 @@ export const updateProfile = async (values) => {
     console.error("Full error object:", error);
   }
 };
+
+export const createUserCustomer = async (values) => {
+  console.log("values account customer autobottttttttttt", values);
+    const response = await axios.post(
+      "https://homemealtaste.azurewebsites.net/api/User/register-for-customer",
+      values
+    );
+    return response.data
+};
