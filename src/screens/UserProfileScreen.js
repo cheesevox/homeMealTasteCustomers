@@ -27,10 +27,11 @@ const UserProfileScreen = ({ navigation, route }) => {
   const [profile, setProfile] = useState();
 console.log("USERRRRRR",user)
   const fectProfileByCustomerId = () => {
-    getUserByID(user?.customerId).then((res) => {
+    getUserByID(user?.userId).then((res) => {
       setProfile(res);
     });
   };
+
   useEffect(() => {
     fectProfileByCustomerId();
   }, []);
@@ -59,7 +60,7 @@ console.log("USERRRRRR",user)
       navigation.goBack();
     }, 5100);
   };
-
+console.log("wallllllllet", profile)
   return (
     <SafeAreaView
       style={{
@@ -150,7 +151,7 @@ console.log("USERRRRRR",user)
                 Email : {profile?.email}
               </Ionicons>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Wallet", { item: profile })}
+                onPress={() => navigation.navigate("Wallet", { user })}
               >
                 <View
                   style={{
@@ -179,7 +180,7 @@ console.log("USERRRRRR",user)
                   />
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => navigation.navigate("Transaction")}
               >
                 <View
@@ -204,7 +205,7 @@ console.log("USERRRRRR",user)
                     paddingVertical={20}
                   />
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity onPress={() => navigation.navigate("Privacy")}>
                 <View
                   style={{

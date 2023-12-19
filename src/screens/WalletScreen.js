@@ -18,12 +18,15 @@ import { CheckBox } from "react-native-elements";
 import { rows } from "deprecated-react-native-prop-types/DeprecatedTextInputPropTypes";
 import { WebView } from "react-native-webview";
 import HeaderComp from "./HeaderComp";
+import { useSelector } from "react-redux";
 
 const WalletScreen = ({ navigation, route }) => {
   const { item } = route.params;
   const [showWebView, setShowWebView] = useState(false);
   const yourLink =
     "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=678900&vnp_Command=pay&vnp_CreateDate=20231128172549&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=5&vnp_OrderType=Recharge&vnp_ReturnUrl=https%3A%2F%2Fhomemealtaste.azurewebsites.net%2Fapi%2FPayment%2Fget-payment-return&vnp_TmnCode=V25Y8STO&vnp_TxnRef=638367639499956841&vnp_Version=2.1.0&vnp_SecureHash=e46f8343b778224b1075f674aac39cf12ed3b276b7a8832eccc27435cfadbfb1e2261e6b2318b7658daf42dc225a7dc482e9345fb6916296cff4207a28a70ce1";
+    
+  const user = useSelector(state => state.user.user)
 
   const handlePressWeb = () => {
     // MyWebComponent(link);
@@ -37,7 +40,7 @@ const WalletScreen = ({ navigation, route }) => {
   const [balance, setBalance] = useState("");
   const [isSelected, setSelection] = useState(false);
   const [values, setValues] = useState({
-    userId: item?.userId,
+    userId: user?.userId,
     balance: null,
   });
   const createPaymentCustomer = () => {
@@ -133,7 +136,7 @@ const WalletScreen = ({ navigation, route }) => {
       <View style={{ flex: 4, marginHorizontal: 30 }}>
         {/* <Text style={{fontSize:20, fontWeight:'bold', color:'white'}}>Balance :</Text> */}
         <Text style={{ fontSize: 21, fontWeight: "bold", color: "orange" }}>
-          Balance : {item.walletDto?.balance} VND
+          Balance : {user.walletDtoResponse?.balance} VND
         </Text>
         <Text style={{ fontWeight: "bold", fontSize: 18 }}>
           Input For Reacharge

@@ -35,29 +35,19 @@ const RegisterScreen = ({ navigation }) => {
   const [isFocus, setIsFocus] = useState(false);
 
   useEffect(() => {
-    getAllDistrict().then((ref) => {
-      console.log(ref);
-      setDistrict(ref);
-    });
+    getAllDistrict()
+      .then((ref) => {
+        console.log(ref);
+        setDistrict(ref);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
   }, []);
-  // const onChagePhone = (value) => {
-  //   setPhone(value);
-  // };
-  // const onChagePassword = (value) => {
-  //   setPassword(value);
-  // };
-  // const onChageUserName = (value) => {
-  //   setUserName(value);
-  // };
-  // const onChageEmail = (value) => {
-  //   setEmail(value);
-  // };
+  
 
   const onClickRegister = () => {
-    // if (value.length == 0 || password.length == 0) {
-    //   return console.log("Please enter Regiter infomation");
-    // } else {
-      createUserCustomer({ ...values, districtId: districtId })
+    createUserCustomer({ ...values, districtId: districtId })
       .then((res) => {
         console.log("RESSSSSSSSSSSS", res)
         Toast.show({
@@ -66,14 +56,8 @@ const RegisterScreen = ({ navigation }) => {
           text2: "Create Account Completed.",
         });
       })
-      navigation.navigate("Login");
-    // }
-    // console.log("Click regiter", {
-    //   phone,
-    //   password,
-    //   username,
-    //   email,
-    // });
+    navigation.navigate("Login");
+
   };
   return (
     <View style={{ marginTop: 30 }}>
@@ -119,17 +103,17 @@ const RegisterScreen = ({ navigation }) => {
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Ionicons name="call-outline" size={20}></Ionicons>
           </View>
-          <View style={{ padding: 20 }}>
+          <View style={{ padding: 15 }}>
             <TextInput
               width={280}
               placeholder="Your Phone Numbers"
               // value={phone}
               onChangeText={
                 (text) =>
-                setValues({
-                  ...values,
-                  phone: text,
-                })
+                  setValues({
+                    ...values,
+                    phone: text,
+                  })
               }
             ></TextInput>
           </View>
@@ -148,7 +132,7 @@ const RegisterScreen = ({ navigation }) => {
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Ionicons name="lock-closed-outline" size={20}></Ionicons>
           </View>
-          <View style={{ padding: 20 }}>
+          <View style={{ padding: 15 }}>
             <TextInput
               width={280}
               placeholder="Your Password"
@@ -156,10 +140,10 @@ const RegisterScreen = ({ navigation }) => {
               secureTextEntry={true}
               onChangeText={
                 (text) =>
-                setValues({
-                  ...values,
-                  password: text,
-                })
+                  setValues({
+                    ...values,
+                    password: text,
+                  })
               }
             ></TextInput>
           </View>
@@ -180,22 +164,53 @@ const RegisterScreen = ({ navigation }) => {
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Ionicons name="card-outline" size={20}></Ionicons>
           </View>
-          <View style={{ padding: 20 }}>
+          <View style={{ padding: 15 }}>
             <TextInput
               width={280}
               placeholder="Your User Name"
               // value={username}
               onChangeText={
                 (text) =>
-                setValues({
-                  ...values,
-                  username: text,
-                })
+                  setValues({
+                    ...values,
+                    username: text,
+                  })
+              }
+            ></TextInput>
+          </View>
+        </View>
+          {/* user name */}
+          <View
+          style={{
+            paddingLeft: 10,
+            marginHorizontal: 40,
+            flexDirection: "row",
+            borderColor: "grey",
+            borderWidth: 1,
+            borderRadius: 10,
+            marginBottom: 10,
+          }}
+        >
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Ionicons name="card-outline" size={20}></Ionicons>
+          </View>
+          <View style={{ padding: 15 }}>
+            <TextInput
+              width={280}
+              placeholder="Your Name"
+              // value={username}
+              onChangeText={
+                (text) =>
+                  setValues({
+                    ...values,
+                    name: text,
+                  })
               }
             ></TextInput>
           </View>
         </View>
         {/* user     */}
+        
         <View
           style={{
             paddingLeft: 10,
@@ -207,56 +222,84 @@ const RegisterScreen = ({ navigation }) => {
           }}
         >
           <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Ionicons name="location-outline" size={20}></Ionicons>
+          </View>
+          <View style={{ padding: 15 }}>
+            <TextInput
+              width={280}
+              placeholder="Your Address"
+              // value={email}
+              onChangeText={
+                (text) =>
+                  setValues({
+                    ...values,
+                    address: text,
+                  })
+              }
+            ></TextInput>
+          </View>
+        </View>
+        <View
+          style={{
+            paddingLeft: 10,
+            marginHorizontal: 40,
+            flexDirection: "row",
+            borderColor: "grey",
+            borderWidth: 1,
+            borderRadius: 10,
+            marginTop:10
+          }}
+        >
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Ionicons name="mail-outline" size={20}></Ionicons>
           </View>
-          <View style={{ padding: 20 }}>
+          <View style={{ padding: 15 }}>
             <TextInput
               width={280}
               placeholder="Your Email"
               // value={email}
               onChangeText={
                 (text) =>
-                setValues({
-                  ...values,
-                  email: text,
-                })
+                  setValues({
+                    ...values,
+                    email: text,
+                  })
               }
             ></TextInput>
           </View>
         </View>
-
         <View
-              style={{
-                width: "83.5%",
-                padding:10,
-                marginHorizontal:40,
-                marginVertical:20,
-                borderWidth:1,
-                borderRadius: 15,
-                borderColor: "grey",
-              }}
-            >
-              <Dropdown
-                fontFamily="Poppins"
-                containerStyle={{
-                  borderRadius: 20,
-                  width: "100%",
-                  overflow: "hidden",
-                  top: 15,
-                }}
-                data={district}
-                labelField="districtName"
-                valueField="districtId"
-                searchPlaceholder="Search..."
-                value={districtId}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
-                onChange={(value) => {
-                  setDistrictId(value.districtId);
-                  // router.refesh
-                }}
-              />
-            </View>
+          style={{
+            width: "83.5%",
+            padding: 15,
+            marginHorizontal: 40,
+            marginVertical: 10,
+            borderWidth: 1,
+            borderRadius: 15,
+            borderColor: "grey",
+          }}
+        >
+          <Dropdown
+            fontFamily="Poppins"
+            containerStyle={{
+              borderRadius: 10,
+              width: "100%",
+              overflow: "hidden",
+              top: 15,
+            }}
+            data={district}
+            labelField="districtName"
+            valueField="districtId"
+            searchPlaceholder="Search..."
+            value={districtId}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(value) => {
+              setDistrictId(value.districtId);
+              // router.refesh
+            }}
+          />
+        </View>
       </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Text
@@ -270,16 +313,18 @@ const RegisterScreen = ({ navigation }) => {
         >
           By signing up you agree to our Terms &
         </Text>
-        <Text
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            paddingLeft: 50,
-            paddingRight: 50,
-          }}
-        >
-          Condition and Privacy Policy
-        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Privacy")}>
+          <Text
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: 50,
+              paddingRight: 50,
+            }}
+          >
+            Condition and Privacy Policy
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
@@ -300,22 +345,22 @@ const RegisterScreen = ({ navigation }) => {
             Regiter
           </Text>
         </TouchableOpacity>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ marginTop: 50 }}>Already Have Account ?</Text>
-        <View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Login")}
-            style={{
-              marginTop: 20,
-              color: "white",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "black", fontWeight: "500" }}>Login</Text>
-          </TouchableOpacity>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ marginTop: 50 }}>Already Have Account ?</Text>
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Login")}
+              style={{
+                marginTop: 20,
+                color: "white",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "black", fontWeight: "500" }}>Login</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
       </View>
     </View>
   );

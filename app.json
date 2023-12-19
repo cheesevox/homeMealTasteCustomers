@@ -2,6 +2,7 @@
   "expo": {
     "name": "Home Meal Taste",
     "slug": "homemealtaste",
+    "displayName": "Home Meal Taste",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
