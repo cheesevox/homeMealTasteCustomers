@@ -44,21 +44,37 @@ const RegisterScreen = ({ navigation }) => {
         console.error('Error fetching data:', error);
       });
   }, []);
-  
 
   const onClickRegister = () => {
     createUserCustomer({ ...values, districtId: districtId })
       .then((res) => {
-        console.log("RESSSSSSSSSSSS", res)
+        console.log("RESSSSSSSSSSSS", res);
         Toast.show({
           type: "success",
           text1: "Home Meal Taste",
           text2: "Create Account Completed.",
         });
+        navigation.navigate("Login");
       })
-    navigation.navigate("Login");
-
+      .catch((error) => {
+        console.log("Error:", error);
+        if (error && error.response && error.response.status === 500) {
+          // Assuming 409 status code indicates a duplicate account
+          Toast.show({
+            type: "error",
+            text1: "Home Meal Taste",
+            text2: "Account already exists.",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Home Meal Taste",
+            text2: "An error occurred. Please try again.",
+          });
+        }
+      });
   };
+  
   return (
     <View style={{ marginTop: 30 }}>
       <View>
@@ -149,7 +165,7 @@ const RegisterScreen = ({ navigation }) => {
           </View>
         </View>
         {/* user name */}
-        <View
+        {/* <View
           style={{
             marginTop: 10,
             paddingLeft: 10,
@@ -178,11 +194,12 @@ const RegisterScreen = ({ navigation }) => {
               }
             ></TextInput>
           </View>
-        </View>
+        </View> */}
           {/* user name */}
           <View
           style={{
             paddingLeft: 10,
+            marginTop:10,
             marginHorizontal: 40,
             flexDirection: "row",
             borderColor: "grey",
@@ -345,22 +362,6 @@ const RegisterScreen = ({ navigation }) => {
             Regiter
           </Text>
         </TouchableOpacity>
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ marginTop: 50 }}>Already Have Account ?</Text>
-          <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Login")}
-              style={{
-                marginTop: 20,
-                color: "white",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "black", fontWeight: "500" }}>Login</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
       </View>
     </View>
   );

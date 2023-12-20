@@ -587,5 +587,6 @@ export const createUserCustomer = async (values) => {
     return response.data
   } catch (error) {
     console.log("create account", error)
+    throw error
   }
 };
