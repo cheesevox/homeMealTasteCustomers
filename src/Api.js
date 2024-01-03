@@ -1,7 +1,7 @@
 import axios from "axios";
 import { RouteName } from "./Constant";
 
-export const login = async (values, navigation,Toast) =>{
+export const login = async (values, navigation, Toast) => {
   console.log(values);
   try {
     const response = await axios.post(
@@ -10,22 +10,22 @@ export const login = async (values, navigation,Toast) =>{
     );
 
     if (response.data) {
-      console.log("REPSSSSSSSSSSssss", response.data)
-      console.log("role",response.data.roleId)
+      console.log("REPSSSSSSSSSSssss", response.data);
+      console.log("role", response.data.roleId);
       const roleId = response.data.roleId;
-      const userId = response.data.userId
-      const status = response.data.status
+      const userId = response.data.userId;
+      const status = response.data.status;
       if (roleId === 3) {
         navigation.navigate("Login", { loginFailure: true });
       } else if (roleId === 2) {
-        if(status == true){
-        navigation.navigate(`CustomerHome`, {user:response.data});
-        } else{
+        if (status == true) {
+          navigation.navigate(`CustomerHome`, { user: response.data });
+        } else {
           Toast.show({
-            type:"error",
-            text1:"Home Meal Taste",
-            text2:"Your account is ban!"
-          })
+            type: "error",
+            text1: "Home Meal Taste",
+            text2: "Your account is ban!",
+          });
         }
       } else {
         console.log("Unknown roleId:", roleId);
@@ -173,11 +173,11 @@ export const getDishByMealId = async (id) => {
 };
 export const createOrderUser = async (values) => {
   console.log("values creaorder ///////////////", values);
-    const response = await axios.post(
-      "https://homemealtaste.azurewebsites.net/api/Order/create-order",
-      values
-    );
-    return response.data
+  const response = await axios.post(
+    "https://homemealtaste.azurewebsites.net/api/Order/create-order",
+    values
+  );
+  return response.data;
 };
 
 export const getAllOrderByCutomerId = async (id) => {
@@ -584,8 +584,28 @@ export const createUserCustomer = async (values) => {
       "https://homemealtaste.azurewebsites.net/api/User/register-for-customer",
       values
     );
-    return response.data
+    return response.data;
   } catch (error) {
-    console.log("create account", error)
+    console.log("create account", error);
+  }
+};
+export const getAllSessionWithStatusAndBookingSlotTrue = async () => {
+  try {
+    const response = await axios.get(
+      "https://homemealtaste.azurewebsites.net/api/Session/get-all-session-with-status-true-and-booking-slot-true"
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error at getAllSessionWithStatusAndBookingSlotTrue", error);
+  }
+};
+export const getSingleDishType = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/DishType/get-single-dish-type?dishtypeId=${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error at get single dish type");
   }
 };
