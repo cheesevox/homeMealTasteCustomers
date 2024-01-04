@@ -609,3 +609,13 @@ export const getSingleDishType = async (id) => {
     console.log("Error at get single dish type");
   }
 };
+export const getAllAreaBySessionId = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://homemealtaste.azurewebsites.net/api/Area/get-all-area-by-session-id?sessionId=${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error at get all area by session id", error);
+  }
+};

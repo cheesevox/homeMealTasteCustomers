@@ -1,37 +1,57 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { Pressable } from "react-native";
 export default function SessionCard({ session, navigation }) {
-  console.log("session lay61 d9c la", session);
   return (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate("MealSession", {
-          session: session?.item?.sessionId,
+          sessionId: session?.item?.sessionId,
         });
       }}
       style={{
-        backgroundColor: "white",
+        backgroundColor:
+          session?.item.sessionType == "Lunch"
+            ? "#FDDB99"
+            : session?.item.sessionType == "Dinner"
+            ? "#F1EAFF"
+            : "",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
-        borderRadius: 10,
+        borderRadius: 30,
         padding: 10,
-        width: "100%",
-        marginVertical: 5,
+        width: "95%",
+        marginVertical: 30,
+        marginHorizontal: 10,
+        height: 150,
+        position: "relative",
+        elevation: 5,
       }}
     >
-      {session?.item.sessionType == "Lunch" ? (
-        <Ionicons name="sunny-outline" size={30} color="orange" />
-      ) : session?.item.sessionType == "Evening" ? (
-        <Ionicons name="moon-outline" size={30} color="purple" />
-      ) : (
-        <Ionicons name="star-outline" size={25} />
-      )}
+      <View
+        style={{
+          position: "absolute",
+          top: -30,
+          left: 20,
+          padding: 15,
+          borderRadius: 100,
+          backgroundColor: "white",
+          elevation: 5,
+        }}
+      >
+        {session?.item.sessionType == "Lunch" ? (
+          <Ionicons name="sunny-outline" size={40} color="orange" />
+        ) : session?.item.sessionType == "Evening" ? (
+          <Ionicons name="moon-outline" size={30} color="purple" />
+        ) : (
+          <Ionicons name="moon-sharp" size={30} />
+        )}
+      </View>
       <View
         style={{
           marginTop: 10,
@@ -50,28 +70,58 @@ export default function SessionCard({ session, navigation }) {
             justifyContent: "space-around",
           }}
         >
-          <Text
+          <View
             style={{
-              fontFamily: "Poppins",
+              padding: 10,
+              backgroundColor: "white",
+              borderRadius: 100,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
             }}
           >
-            Start Time : {session.item?.startTime}
-          </Text>
-          <Text
+            <Ionicons name="md-lock-open-sharp" size={15} color="green" />
+
+            <Text
+              style={{
+                color: "black",
+                fontFamily: "Poppins",
+                marginHorizontal: 5,
+              }}
+            >
+              Start Time : {session.item?.startTime}
+            </Text>
+          </View>
+          <View
             style={{
-              fontFamily: "Poppins",
+              padding: 10,
+              backgroundColor: "white",
+              borderRadius: 100,
+              display: "flex",
+              flexDirection: "row",
             }}
           >
-            End Time : {session.item?.endTime}
-          </Text>
+            <View>
+              <Ionicons name="md-lock-closed-sharp" size={15} color="green" />
+            </View>
+            <Text
+              style={{
+                color: "black",
+                fontFamily: "Poppins",
+                marginHorizontal: 5,
+              }}
+            >
+              End Time : {session.item?.endTime}
+            </Text>
+          </View>
         </View>
-        <Text
+        {/* <Text
           style={{
             fontFamily: "Poppins",
           }}
         >
           {session?.item?.endDate}
-        </Text>
+        </Text> */}
       </View>
     </TouchableOpacity>
   );

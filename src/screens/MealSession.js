@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import * as Icon from "react-native-feather";
 import {
   getAllApprovedMealSessionBySessionId,
+  getAllAreaBySessionId,
   getAllMealSessionInDayApprove,
   getAllMealSessionWithStatus,
   getAllSessionByAreaId,
@@ -22,26 +23,33 @@ import { Dropdown } from "react-native-element-dropdown";
 import { FlatList } from "react-native";
 import { SafeAreaView } from "react-native";
 const MealSession = ({ navigation, route }) => {
-  const { areaId } = route.params;
+  // const { areaId } = route.params;
+  const { sessionId } = route.params;
+
   const [session, setSession] = useState([]);
   const [value, setValue] = useState();
-
+  const [area, setArea] = useState([]);
   const [mealSession, setMealSession] = useState([]);
   // const fetchAllSessionByAreaId = () => {
   //   getAllMealSessionInDayApprove(areaId).then((res) => {
   // setMealSession(res);
   //   });
   // };
-  const fetchAllSessionTrueByAreaId = () => {
-    getAllSessionByAreaId(areaId).then((res) => {
-      console.log("session res la", res[0]?.sessionId);
-      setSession(res);
-      setValue(res[0]?.sessionId);
+  // const fetchAllSessionTrueByAreaId = () => {
+  //   getAllSessionByAreaId(areaId).then((res) => {
+  //     console.log("session res la", res[0]?.sessionId);
+  //     setSession(res);
+  //     setValue(res[0]?.sessionId);
+  //   });
+  // };
+  const fetchAllMealSessionBySessionId = () => {
+    getAllApprovedMealSessionBySessionId(sessionId).then((res) => {
+      setMealSession(res);
     });
   };
-  const fetchAllMealSessionBySessionId = () => {
-    getAllApprovedMealSessionBySessionId(value).then((res) => {
-      setMealSession(res);
+  const fetchAllAreaInSession = () => {
+    getAllAreaBySessionId(sessionId).then((res) => {
+      setArea(res);
     });
   };
   // const filteredMealSession = mealSession.filter(
@@ -50,11 +58,19 @@ const MealSession = ({ navigation, route }) => {
   // );
   useEffect(() => {
     fetchAllMealSessionBySessionId();
-  }, [value]);
+    fetchAllAreaInSession();
+  }, [sessionId]);
   useEffect(() => {
     // fetchAllSessionByAreaId();
-    fetchAllSessionTrueByAreaId();
-  }, [areaId]);
+    // fetchAllSessionTrueByAreaId();
+    console.log(value);
+    const filteredData = mealSession;
+    // if(value){
+    //   filteredData = mealSession.filter((item)=>{
+    //     return item.
+    //   })
+    // }
+  }, [value]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -74,14 +90,15 @@ const MealSession = ({ navigation, route }) => {
           selectedTextStyle={styles.selectedTextStyle}
           containerStyle={styles.containerStyle}
           fontFamily="Poppins"
-          data={session}
+          data={area}
           maxHeight={300}
-          labelField="sessionName"
-          valueField="sessionId"
-          placeholder="Select Session"
+          labelField="areaName"
+          valueField="areaId"
+          placeholder="Select Area"
           value={value}
           onChange={(item) => {
-            setValue(item.sessionId);
+            console.log(item);
+            setValue(item.areaId);
           }}
         />
         {/* <ScrollView style={styles.body}>

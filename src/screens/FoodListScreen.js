@@ -70,12 +70,15 @@ const FoodListScreen = ({ navigation, route }) => {
       style={{
         padding: 20,
         paddingHorizontal: 30,
-        marginHorizontal: 10,
+        margin: 10,
         backgroundColor: "white",
         borderRadius: 20,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#FFDA6E",
+        elevation: 5,
       }}
       onPress={() => {
         navigation.navigate("DishTypeDetailScreen", {
@@ -132,13 +135,13 @@ const FoodListScreen = ({ navigation, route }) => {
   //   return unsubscribe; // Cleanup
   // }, [navigation]);
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#ECECEC" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           backgroundColor: "#FFA500",
           height: "25%",
-          borderBottomRightRadius: 20,
-          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 50,
+          borderBottomLeftRadius: 50,
           position: "relative",
           display: "flex",
           justifyContent: "center",
@@ -215,7 +218,7 @@ const FoodListScreen = ({ navigation, route }) => {
                 // position: "absolute",
               // }}
           // >*/}
-        <Dropdown
+        {/* <Dropdown
           style={{
             position: "absolute",
             backgroundColor: "white",
@@ -244,68 +247,77 @@ const FoodListScreen = ({ navigation, route }) => {
             setDistrictId(value.districtId);
             // router.refesh
           }}
-        />
+        /> */}
         {/* </View> */}
         {/* </View> */}
         {/* </View> */}
         {/* sessiion filter */}
       </View>
       {/* dish types */}
-      <View
+      <ScrollView
         style={{
-          marginTop: 20,
-          padding: 5,
+          height: "75%",
         }}
       >
-        <Text
-          style={{
-            fontFamily: "Poppins",
-            fontSize: 25,
-            fontWeight: "bold",
-          }}
-        >
-          Dish's Type
-        </Text>
-        <View>
-          {/* <FlatList data={dishType} renderItem={(item)=>(
-            <Text>{item?.name}<Text>
-          )}/> */}
-          <FlatList
-            horizontal
-            style={{
-              padding: 10,
-            }}
-            data={dishType}
-            renderItem={({ item }) => <DishTypeComponent item={item} />}
-          />
-        </View>
-      </View>
-      <View style={{ marginBottom: 50, padding: 10, height: "100%" }}>
-        <Text
-          style={{ fontSize: 30, fontWeight: "bold", fontFamily: "Poppins" }}
-        >
-          Session
-        </Text>
-        {/* district list */}
         <View
           style={{
-            height: "100%",
-            borderRadius: 20,
-            padding: 10,
+            marginTop: 20,
+            padding: 5,
           }}
         >
-          <FlatList
-            style={{ gap: 20 }}
-            showsVerticalScrollIndicator={false}
-            numColumns={1}
-            data={sessions}
-            keyExtractor={(item) => item.sessionId}
-            renderItem={(item) => (
-              <SessionCard session={item} navigation={navigation} />
-            )}
-          ></FlatList>
+          <Text
+            style={{
+              fontFamily: "Poppins",
+              fontSize: 25,
+              fontWeight: "bold",
+            }}
+          >
+            Category
+          </Text>
+          <View
+          // style={{
+          //   flex: 1,
+          // }}
+          >
+            {/* <FlatList data={dishType} renderItem={(item)=>(
+            <Text>{item?.name}<Text>
+          )}/> */}
+            <FlatList
+              horizontal
+              style={{
+                padding: 10,
+              }}
+              data={dishType}
+              renderItem={({ item }) => <DishTypeComponent item={item} />}
+            />
+          </View>
         </View>
-      </View>
+        <View style={{ marginBottom: 50, padding: 10, height: "100%" }}>
+          <Text
+            style={{ fontSize: 30, fontWeight: "bold", fontFamily: "Poppins" }}
+          >
+            Session
+          </Text>
+          {/* district list */}
+          <View
+            style={{
+              borderRadius: 20,
+              padding: 10,
+            }}
+          >
+            <FlatList
+              style={{ gap: 5 }}
+              showsVerticalScrollIndicator={false}
+              numColumns={1}
+              data={sessions}
+              keyExtractor={(item) => item.sessionId}
+              renderItem={(item) => (
+                <SessionCard session={item} navigation={navigation} />
+              )}
+            ></FlatList>
+          </View>
+        </View>
+      </ScrollView>
       {/* </View> */}
     </SafeAreaView>
   );

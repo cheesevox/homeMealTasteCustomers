@@ -33,7 +33,7 @@ export default function CutomerHomeScreen() {
         <View className="flex-row flex-1 items-center p-3 rounded-full border border-gray-300">
           <Icon.Search height="25" width="25" stroke="gray" />
           <TextInput
-            placeholder="Resturants"
+            placeholder="Restaurants"
             className="ml-2 flex-1"
             keyboardType="default"
           />

@@ -37,8 +37,6 @@ const OrderScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
-  console.log("ORRRRRRR", order)
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />

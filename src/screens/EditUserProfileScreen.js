@@ -12,6 +12,7 @@ import { TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
 import { getAllDistrict, updateProfile } from "../Api";
 import Toast from "react-native-toast-message";
+import HeaderComp from "./HeaderComp";
 
 const EditUserProfileScreen = ({ navigation, route }) => {
   const [isFocus, setIsFocus] = useState(false);
@@ -28,12 +29,12 @@ const EditUserProfileScreen = ({ navigation, route }) => {
   useEffect(() => {
     fetchAllDistrict();
   }, []);
-  console.log("EDITTTTTTTTTTTTTTTTT PROOOOOOOO", profile);
 
   const [values, setValues] = useState({
-    userId : profile?.profile?.userId,
+    userId: profile?.profile?.userId,
     name: profile?.profile?.name || "",
     username: profile?.profile?.username || "",
+    phone: profile?.profile.phone || "",
     email: profile?.profile?.email || "",
     address: profile?.profile?.address || "",
     districtId: profile?.profile?.districtId || null,
@@ -49,8 +50,13 @@ const EditUserProfileScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView>
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+    <SafeAreaView
+      style={{
+        backgroundColor: "white",
+        flex: 1,
+      }}
+    >
+      {/* <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={{
@@ -78,7 +84,8 @@ const EditUserProfileScreen = ({ navigation, route }) => {
         >
           <Icon.CreditCard style={{}} strokeWidth={3} />
         </TouchableOpacity>
-      </View>
+      </View> */}
+      <HeaderComp label="Edit Profile" onBack={() => navigation.goBack()} />
       <View style={{ alignItems: "center", margin: 20 }}>
         <Image
           source={require("../../assets/images/avatar.jpg")}
@@ -91,13 +98,15 @@ const EditUserProfileScreen = ({ navigation, route }) => {
           }}
         />
         <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-          {profile?.profile?.name} # {profile?.profile?.userId}
+          {profile?.profile?.name}
         </Text>
       </View>
       <View>
         <TextInput
+          label="Name"
           placeholder={profile?.profile?.name}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
+          value={values.name}
           onChangeText={(text) =>
             setValues({
               ...values,
@@ -105,19 +114,35 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-        <TextInput
+        {/* <TextInput
+          label="User Name"
           placeholder={profile?.profile?.username}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
+          value={values.username}
           onChangeText={(text) =>
             setValues({
               ...values,
               username: text,
             })
           }
+        ></TextInput> */}
+        <TextInput
+          label="Phone"
+          placeholder={profile?.profile?.username}
+          style={{ marginVertical: 20, marginHorizontal: 40 }}
+          value={values.phone}
+          onChangeText={(text) =>
+            setValues({
+              ...values,
+              phone: text,
+            })
+          }
         ></TextInput>
-         <TextInput
+        <TextInput
+          label="Email"
           placeholder={profile?.profile?.email}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
+          value={values.email}
           onChangeText={(text) =>
             setValues({
               ...values,
@@ -126,8 +151,10 @@ const EditUserProfileScreen = ({ navigation, route }) => {
           }
         ></TextInput>
         <TextInput
+          label="Address"
           placeholder={profile?.profile?.address}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
+          value={values.address}
           onChangeText={(text) =>
             setValues({
               ...values,
@@ -135,9 +162,17 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-        <View style={{ marginHorizontal:40, marginVertical:20,borderWidth:1, padding:5 }}>
+
         <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+          // style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+          style={{
+            backgroundColor: "white",
+            border: "none",
+            borderRadius: 10,
+            marginHorizontal: 40,
+            padding: 10,
+            elevation: 5,
+          }}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -158,7 +193,6 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             setIsFocus(false);
           }}
         ></Dropdown>
-        </View>
       </View>
 
       <View
@@ -166,14 +200,14 @@ const EditUserProfileScreen = ({ navigation, route }) => {
       >
         <TouchableOpacity
           style={{
-            backgroundColor: "#f96163",
+            backgroundColor: "#FFAB01",
             borderRadius: 18,
             justifyContent: "center",
             paddingVertical: 18,
             width: "60%",
             alignItems: "center",
           }}
-          onPress={()=> onHandleUpdateProfile()}
+          onPress={() => onHandleUpdateProfile()}
         >
           <Text style={{ fontSize: 18, color: "#fff", fontWeight: "700" }}>
             Update Profile
