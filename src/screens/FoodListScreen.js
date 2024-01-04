@@ -16,9 +16,12 @@ import React, { useState, useEffect } from "react";
 // import CategoriesFilter from "../components/CategoriesFilter";
 import {
   getAllAreaByDistrictId,
+  getAllDishType,
   getAllDistrict,
   getAllMealInSessionID,
+  getAllSession,
   getAllSessionByAreaId,
+  getAllSessionWithStatusAndBookingSlotTrue,
 } from "../Api";
 import { getAllArea } from "../Api";
 import MealSessionCard from "../components/MealSessionCard";
@@ -31,6 +34,7 @@ import { Bold } from "react-native-feather";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import AreaCard from "../components/AreaCard";
+import SessionCard from "../components/SessionCard";
 const FoodListScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state.user.user);
   const { name } = user || {};
@@ -40,29 +44,73 @@ const FoodListScreen = ({ navigation, route }) => {
   const [mealInSession, setMealInSession] = useState([]);
   const [mealInSessionId, setMealInSessionId] = useState([]);
   const districtDefault = useSelector((state) => state.user.user?.districtId);
+  const [dishType, setDishType] = useState([]);
   const [district, setDistrict] = useState([]);
   const [districtId, setDistrictId] = useState(1);
   const [isFocus, setIsFocus] = useState(false);
+  const [sessions, setSessions] = useState([]);
   // const loadFontsAsync = async () => {
   //   await
   // };
   // loadFontsAsync();
-  const fetchAllSessionByAreaId = (id) => {
-    getAllSessionByAreaId(areaId ? areaId : area[0])
-      .then((res) => {
-        setSessin(res);
-      })
-      .catch((error) => console.log(error));
+  // const fetchAllSessionByAreaId = (id) => {
+  //   getAllSessionByAreaId(areaId ? areaId : area[0])
+  //     .then((res) => {
+  //       setSessin(res);
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
+  const fetchAllSession = () => {
+    getAllSessionWithStatusAndBookingSlotTrue().then((res) => {
+      setSessions(res);
+    });
   };
-
+  const DishTypeComponent = ({ item }) => (
+    <TouchableOpacity
+      style={{
+        padding: 20,
+        paddingHorizontal: 30,
+        margin: 10,
+        backgroundColor: "white",
+        borderRadius: 20,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#FFDA6E",
+        elevation: 5,
+      }}
+      onPress={() => {
+        navigation.navigate("DishTypeDetailScreen", {
+          dishTypeId: item?.dishTypeId,
+        });
+      }}
+    >
+      <Ionicons name="bonfire" size={20} color="red" />
+      <Text
+        style={{
+          fontFamily: "Poppins",
+          fontSize: 15,
+        }}
+      >
+        {item.name}
+      </Text>
+    </TouchableOpacity>
+  );
   const fectchAllAreaByDistrictId = () => {
     getAllAreaByDistrictId(districtId ? districtId : districtDefault)
       .then((res) => {
         setArea(res);
         setAreaId(res[0].areaId);
-        const districtName = session[0]?.districtDtoResponse?.districtName;
+        // const districtName = session[0]?.districtDtoResponse?.districtName;
       })
       .catch((error) => console.log(error));
+  };
+  const fetchAllDishType = () => {
+    getAllDishType().then((res) => {
+      console.log(res);
+      setDishType(res);
+    });
   };
   useEffect(() => {
     fectchAllAreaByDistrictId();
@@ -73,6 +121,8 @@ const FoodListScreen = ({ navigation, route }) => {
       console.log(ref);
       setDistrict(ref);
     });
+    fetchAllDishType();
+    fetchAllSession();
   }, []);
 
   // useEffect(() => {
@@ -85,13 +135,16 @@ const FoodListScreen = ({ navigation, route }) => {
   //   return unsubscribe; // Cleanup
   // }, [navigation]);
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#ECECEC" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           backgroundColor: "#FFA500",
           height: "25%",
-          borderBottomRightRadius: 20,
-          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 50,
+          borderBottomLeftRadius: 50,
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <View
@@ -99,11 +152,10 @@ const FoodListScreen = ({ navigation, route }) => {
             flexDirection: "column",
             marginTop: 0,
             justifyContent: "space-between",
-            paddingHorizontal: 20,
             alignItems: "center",
           }}
         >
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               width: "100%",
@@ -111,7 +163,7 @@ const FoodListScreen = ({ navigation, route }) => {
             }}
           >
             <Ionicons size={35} name="notifications-outline" color={"orange"} />
-          </View>
+          </View> */}
           <View>
             <Text
               style={{
@@ -137,7 +189,7 @@ const FoodListScreen = ({ navigation, route }) => {
           </View>
         </View>
         {/* Search Filter */}
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             width: "100%",
@@ -145,8 +197,8 @@ const FoodListScreen = ({ navigation, route }) => {
             justifyContent: "center",
             alignItems: "center",
           }}
-        >
-          <View
+        > */}
+        {/* <View
             style={{
               display: "flex",
               backgroundColor: "white",
@@ -158,63 +210,114 @@ const FoodListScreen = ({ navigation, route }) => {
               padding: 20,
               // bottom: -40,
             }}
-          >
-            <View
-              style={{
-                width: "100%",
-                borderRadius: 20,
-              }}
-            >
-              <Dropdown
-                fontFamily="Poppins"
-                containerStyle={{
-                  borderRadius: 20,
-                  width: "100%",
-                  overflow: "hidden",
-                  top: 15,
-                }}
-                data={district}
-                labelField="districtName"
-                valueField="districtId"
-                searchPlaceholder="Search..."
-                value={districtId}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
-                onChange={(value) => {
-                  setDistrictId(value.districtId);
-                  // router.refesh
-                }}
-              />
-            </View>
-          </View>
-        </View>
+          > */}
+        {/* <View 
+              // style={{
+                // width: "100%",
+                // borderRadius: 20,
+                // position: "absolute",
+              // }}
+          // >*/}
+        {/* <Dropdown
+          style={{
+            position: "absolute",
+            backgroundColor: "white",
+            width: "90%",
+            padding: 10,
+            borderRadius: 20,
+            bottom: -20,
+            left: "5%",
+            right: "5%",
+            borderColor: "gray",
+          }}
+          fontFamily="Poppins"
+          containerStyle={{
+            borderRadius: 20,
+            overflow: "hidden",
+            top: 5,
+          }}
+          data={district}
+          labelField="districtName"
+          valueField="districtId"
+          searchPlaceholder="Search..."
+          value={districtId}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(value) => {
+            setDistrictId(value.districtId);
+            // router.refesh
+          }}
+        /> */}
+        {/* </View> */}
+        {/* </View> */}
+        {/* </View> */}
         {/* sessiion filter */}
       </View>
-      <View style={{ marginVertical: 50, padding: 10, height: "60%" }}>
-        <Text
-          style={{ fontSize: 30, fontWeight: "bold", fontFamily: "Poppins" }}
-        >
-          Area
-        </Text>
-        {/* district list */}
+      {/* dish types */}
+      <ScrollView
+        style={{
+          height: "75%",
+        }}
+      >
         <View
           style={{
-            height: "100%",
-            borderRadius: 20,
-            padding: 10,
+            marginTop: 20,
+            padding: 5,
           }}
         >
-          <FlatList
-            style={{ gap: 20 }}
-            numColumns={2}
-            data={area}
-            keyExtractor={(item) => item.areaId}
-            renderItem={(area) => (
-              <AreaCard area={area} navigation={navigation} />
-            )}
-          ></FlatList>
+          <Text
+            style={{
+              fontFamily: "Poppins",
+              fontSize: 25,
+              fontWeight: "bold",
+            }}
+          >
+            Category
+          </Text>
+          <View
+          // style={{
+          //   flex: 1,
+          // }}
+          >
+            {/* <FlatList data={dishType} renderItem={(item)=>(
+            <Text>{item?.name}<Text>
+          )}/> */}
+            <FlatList
+              horizontal
+              style={{
+                padding: 10,
+              }}
+              data={dishType}
+              renderItem={({ item }) => <DishTypeComponent item={item} />}
+            />
+          </View>
         </View>
-      </View>
+        <View style={{ marginBottom: 50, padding: 10, height: "100%" }}>
+          <Text
+            style={{ fontSize: 30, fontWeight: "bold", fontFamily: "Poppins" }}
+          >
+            Session
+          </Text>
+          {/* district list */}
+          <View
+            style={{
+              borderRadius: 20,
+              padding: 10,
+            }}
+          >
+            <FlatList
+              style={{ gap: 5 }}
+              showsVerticalScrollIndicator={false}
+              numColumns={1}
+              data={sessions}
+              keyExtractor={(item) => item.sessionId}
+              renderItem={(item) => (
+                <SessionCard session={item} navigation={navigation} />
+              )}
+            ></FlatList>
+          </View>
+        </View>
+      </ScrollView>
       {/* </View> */}
     </SafeAreaView>
   );

@@ -59,7 +59,7 @@ const HeaderComp = (props) => {
           textAlign: "center",
           fontFamily: "Poppins",
           fontSize: 20,
-          fontWeight: "700",
+          // fontWeight: "700",
           flex: 8,
         }}
       >
