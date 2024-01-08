@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import React, { useState } from "react";
+import Checkbox from "expo-checkbox";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,21 +18,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { createOrderUser } from "../Api";
 import Toast from "react-native-toast-message";
 import HeaderComp from "./HeaderComp";
-
+import RadioGroup from "react-native-radio-buttons-group";
 const OrderCartScreen = ({ navigation, route }) => {
   const { item } = route.params || {};
   const user = useSelector((state) => state.user.user);
-  console.log("user.customerIduser.customerIduser.customerId",user.customerId)
+  console.log("user.customerIduser.customerIduser.customerId", user.customerId);
   const [quantity, setQuantity] = useState(1);
+  const [selectedId, setSelectedId] = useState();
   const [values, setValues] = useState({
     customerId: user.customerId,
     mealSessionId: item?.mealSessionId,
     quantity: quantity,
   });
+  const [isChecked, setChecked] = useState(false);
+  const radioButtons = [
+    {
+      id: "1", // acts as primary key, should be unique and non-empty string
+      label: "Lunch",
+      value: "Lunch",
+    },
+    {
+      id: "2",
+      label: "Dinner",
+      value: "Dinner",
+    },
+  ];
   const createOrder = () => {
     createOrderUser({ ...values, quantity: quantity })
       .then((res) => {
-        console.log("RESSSSSSSSSSSS", res)
         Toast.show({
           type: "success",
           text1: "Home Meal Taste",
@@ -39,7 +53,6 @@ const OrderCartScreen = ({ navigation, route }) => {
         });
       })
       .catch((err) => {
-        console.log("ERRRRRRRRR", err)
         Toast.show({
           type: "error",
           text1: "Home Meal Taste",
@@ -122,7 +135,72 @@ const OrderCartScreen = ({ navigation, route }) => {
   };
   return (
     <SafeAreaView style={{ backgroundColor: "#F2F2F2", flex: 1 }}>
-      <HeaderComp label="Cart" />
+      <HeaderComp label="Cart" onBack={() => navigation.goBack()} />
+      {item ? (
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-around",
+            marginVertical: 10,
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Checkbox
+              style={{
+                width: 25,
+                height: 25,
+              }}
+              value={isChecked}
+              onValueChange={setChecked}
+            />
+            <Text style={{ fontFamily: "Poppins", fontSize: 20, marginTop: 4 }}>
+              Lunch
+            </Text>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Checkbox
+              style={{
+                width: 25,
+                height: 25,
+              }}
+              value={isChecked}
+              onValueChange={setChecked}
+            />
+
+            <Text
+              style={{
+                fontFamily: "Poppins",
+                fontSize: 20,
+                paddingVertical: 0,
+                marginTop: 4,
+              }}
+            >
+              Dinner
+            </Text>
+          </View>
+        </View>
+      ) : (
+        ""
+      )}
+
       <ScrollView
         style={{
           padding: 20,
@@ -132,11 +210,14 @@ const OrderCartScreen = ({ navigation, route }) => {
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("CustomerHome", { user: user })
+                navigation.navigate("CustomerHome", { user: user });
               }}
             >
               <Text style={{ padding: 20 }}> You Wanna Food ?</Text>
-              <Image source={require("../../assets/images/tray.png")} style={{ height: 150, width: 150 }} />
+              <Image
+                source={require("../../assets/images/tray.png")}
+                style={{ height: 150, width: 150 }}
+              />
             </TouchableOpacity>
           </View>
         ) : (

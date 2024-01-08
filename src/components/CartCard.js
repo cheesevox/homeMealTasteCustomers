@@ -47,23 +47,55 @@ const CartCard = ({ item }) => {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "Poppins",
+              }}
+            >
               {/* name order  */}
               {item?.mealSessionDto2?.mealDto2?.name}
             </Text>
-            <Text>Price: {item?.totalPrice}</Text>
-            <Text>Date: {item?.time}</Text>
-            <Text>Booked Slot : {item?.quantity}</Text>
             <Text
               style={{
-                padding: 1,
-                fontWeight: 700,
-                borderRadius: 5,
-                borderColor: "gray",
+                fontFamily: "Poppins",
+              }}
+            >
+              Total: {item?.totalPrice} VND
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Poppins",
+              }}
+            >
+              Date: {item?.time}
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Poppins",
+              }}
+            >
+              Booked Slot : {item?.quantity}
+            </Text>
+            {/* <View
+              style={{
+                borderRadius: 20,
+                paddingVertical: 5,
+                elevation: 5,
+                backgroundColor: "white",
+                borderWidth: 0.2,
+                borderColor: "blue",
+                width: "auto",
+              }}
+            > */}
+            <Text
+              style={{
+                fontFamily: "Poppins",
               }}
             >
               {item?.status}
             </Text>
+            {/* </View> */}
           </View>
         </View>
       </View>
@@ -78,10 +110,16 @@ const CartCard = ({ item }) => {
         }}
       >
         <TouchableOpacity
-          style={{}}
+          style={{ paddingHorizontal: 10 }}
           onPress={() => navigation.navigate("Feedback", { item })}
         >
-          <Text style={{ fontWeight: "bold", fontSize: 18, color: "white" }}>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "Poppins",
+              fontSize: 18,
+            }}
+          >
             Review
           </Text>
         </TouchableOpacity>
