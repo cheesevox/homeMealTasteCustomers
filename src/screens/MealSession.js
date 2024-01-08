@@ -29,6 +29,7 @@ const MealSession = ({ navigation, route }) => {
   const [session, setSession] = useState([]);
   const [value, setValue] = useState();
   const [area, setArea] = useState([]);
+  const [newData, setNewData] = useState([]);
   const [mealSession, setMealSession] = useState([]);
   // const fetchAllSessionByAreaId = () => {
   //   getAllMealSessionInDayApprove(areaId).then((res) => {
@@ -64,12 +65,15 @@ const MealSession = ({ navigation, route }) => {
     // fetchAllSessionByAreaId();
     // fetchAllSessionTrueByAreaId();
     console.log(value);
-    const filteredData = mealSession;
-    // if(value){
-    //   filteredData = mealSession.filter((item)=>{
-    //     return item.
-    //   })
-    // }
+    let filteredData = [...mealSession];
+    if (value) {
+      filteredData = mealSession.filter((item) => {
+        return (
+          item.kitchenDtoForMealSession?.areaDtoForMealSession?.areaId == value
+        );
+      });
+    }
+    setNewData(filteredData);
   }, [value]);
 
   useEffect(() => {
@@ -110,7 +114,7 @@ const MealSession = ({ navigation, route }) => {
         </ScrollView> */}
         <FlatList
           numColumns={2}
-          data={mealSession}
+          data={value ? newData : mealSession}
           renderItem={(item, index) => <FoodCard item={item} key={index} />}
         ></FlatList>
       </View>

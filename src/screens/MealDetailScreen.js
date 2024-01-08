@@ -22,7 +22,6 @@ const MealDetailScreen = ({ navigation, route }) => {
   const [meal, setMeal] = useState();
   const [dish, setDish] = useState([]);
   const fetchAllDish = () => {
-    console.log("heheehehehehehe", item.mealSessionId);
     getDishByMealId(item.mealDtoForMealSession?.mealId).then((res) => {
       setDish(res.dishDto);
     });
@@ -73,12 +72,17 @@ const MealDetailScreen = ({ navigation, route }) => {
         <View
           style={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             width: "100%",
             justifyContent: "space-between",
           }}
         >
           <TouchableOpacity
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 5,
+            }}
             onPress={() => {
               if (
                 item &&
@@ -91,34 +95,60 @@ const MealDetailScreen = ({ navigation, route }) => {
               }
             }}
           >
+            <Ionicons name="md-home" size={25} color="#FFAB01" />
             <Text
               style={{
-                fontSize: 30,
-                fontWeight: "bold",
+                fontFamily: "Poppins",
+                fontSize: 20,
+                color: "#FFAB01",
               }}
             >
-              {item?.mealDtoForMealSession?.name}
+              {item?.kitchenDtoForMealSession?.name}
             </Text>
-            <Text>{item?.mealDtoForMealSession.description}</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            // onPress={() => navigation.navigate("MealDetail", { item: item })}
-            onPress={() => {
-              dispatch(addToCart(item));
-              navigation.navigate("OrderCart", { item });
-            }}
+          <View
             style={{
-              width: 50,
-              height: 50,
-              backgroundColor: "orange",
-              borderRadius: 28,
-              justifyContent: "center",
-              alignItems: "center",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            <Ionicons name="cart-outline" size={25} />
-            {/* <ion-icon name="cart-outline"></ion-icon> */}
-          </TouchableOpacity>
+            <View style={{}}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  fontFamily: "Poppins",
+                }}
+              >
+                {item?.mealDtoForMealSession?.name}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Poppins",
+                }}
+              >
+                {item?.mealDtoForMealSession.description}
+              </Text>
+            </View>
+            <TouchableOpacity
+              // onPress={() => navigation.navigate("MealDetail", { item: item })}
+              onPress={() => {
+                dispatch(addToCart(item));
+                navigation.navigate("OrderCart", { item });
+              }}
+              style={{
+                width: 50,
+                height: 50,
+                backgroundColor: "orange",
+                borderRadius: 28,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="cart-outline" size={25} />
+              {/* <ion-icon name="cart-outline"></ion-icon> */}
+            </TouchableOpacity>
+          </View>
         </View>
         <View
           style={{
@@ -130,11 +160,11 @@ const MealDetailScreen = ({ navigation, route }) => {
         >
           <Text
             style={{
-              fontWeight: "bold",
               fontSize: 26,
+              fontFamily: "Poppins",
             }}
           >
-            Includes :
+            Dishes :
           </Text>
           <Text
             style={{
