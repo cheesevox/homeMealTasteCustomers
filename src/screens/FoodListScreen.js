@@ -108,7 +108,7 @@ const FoodListScreen = ({ navigation, route }) => {
   };
   const fetchAllDishType = () => {
     getAllDishType().then((res) => {
-      console.log(res);
+      console.log("newwwwwwwwwwwwwwwwww",res);
       setDishType(res);
     });
   };

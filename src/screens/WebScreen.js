@@ -28,10 +28,14 @@ const WebScreen = ({ route, navigation }) => {
         // console.log("REPOSSSSSSSSSSSSS L:Ink" , isResponseLink)
         const urlSearchParams = new URLSearchParams(navState.url);
         const responseCode = urlSearchParams.get("vnp_ResponseCode");
+        const balanceINPUT = urlSearchParams.get("vnp_Amount");
+        const balanceWallet = balanceINPUT/100
+
         if (isInitialURL && isBackNavigation) {
           navigation.goBack();
         } else if (responseCode === "00") {
           navigation.navigate("UserProfile");
+          
           Toast.show({
             type: "success",
             text1: "Home Meal Taste",

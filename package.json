@@ -38,6 +38,7 @@
     "react-native-elements": "^3.4.3",
     "react-native-feather": "^1.1.2",
     "react-native-image-picker": "^7.0.3",
+    "react-native-modal": "^13.0.1",
     "react-native-pager-view": "6.2.0",
     "react-native-paper": "^5.11.2",
     "react-native-radio-buttons-group": "^3.0.5",

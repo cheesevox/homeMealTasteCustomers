@@ -8,21 +8,21 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "expo-checkbox";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Ionicons } from "@expo/vector-icons";
 import * as Icon from "react-native-feather";
 import { useDispatch, useSelector } from "react-redux";
-import { createOrderUser } from "../Api";
+import { createOrderUser, getAllApprovedMealSessionBySessionId, getAllMealSessionByKitchen } from "../Api";
 import Toast from "react-native-toast-message";
 import HeaderComp from "./HeaderComp";
 import RadioGroup from "react-native-radio-buttons-group";
 const OrderCartScreen = ({ navigation, route }) => {
   const { item } = route.params || {};
   const user = useSelector((state) => state.user.user);
-  console.log("user.customerIduser.customerIduser.customerId", user.customerId);
+  // console.log("user.customerIduser.customerIduser.customerId", user.customerId);
   const [quantity, setQuantity] = useState(1);
   const [selectedId, setSelectedId] = useState();
   const [values, setValues] = useState({
@@ -146,61 +146,10 @@ const OrderCartScreen = ({ navigation, route }) => {
             marginVertical: 10,
           }}
         >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 5,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Checkbox
-              style={{
-                width: 25,
-                height: 25,
-              }}
-              value={isChecked}
-              onValueChange={setChecked}
-            />
-            <Text style={{ fontFamily: "Poppins", fontSize: 20, marginTop: 4 }}>
-              Lunch
-            </Text>
-          </View>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 5,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Checkbox
-              style={{
-                width: 25,
-                height: 25,
-              }}
-              value={isChecked}
-              onValueChange={setChecked}
-            />
-
-            <Text
-              style={{
-                fontFamily: "Poppins",
-                fontSize: 20,
-                paddingVertical: 0,
-                marginTop: 4,
-              }}
-            >
-              Dinner
-            </Text>
-          </View>
         </View>
       ) : (
         ""
       )}
-
       <ScrollView
         style={{
           padding: 20,

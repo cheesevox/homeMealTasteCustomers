@@ -23,7 +23,6 @@ import { Dropdown } from "react-native-element-dropdown";
 import { FlatList } from "react-native";
 import { SafeAreaView } from "react-native";
 const MealSession = ({ navigation, route }) => {
-  // const { areaId } = route.params;
   const { sessionId } = route.params;
 
   const [session, setSession] = useState([]);
@@ -43,8 +42,10 @@ const MealSession = ({ navigation, route }) => {
   //     setValue(res[0]?.sessionId);
   //   });
   // };
+  
   const fetchAllMealSessionBySessionId = () => {
     getAllApprovedMealSessionBySessionId(sessionId).then((res) => {
+      console.log("RESSSSSSSSSSSSSSSS",res)
       setMealSession(res);
     });
   };
@@ -61,6 +62,7 @@ const MealSession = ({ navigation, route }) => {
     fetchAllMealSessionBySessionId();
     fetchAllAreaInSession();
   }, [sessionId]);
+
   useEffect(() => {
     // fetchAllSessionByAreaId();
     // fetchAllSessionTrueByAreaId();

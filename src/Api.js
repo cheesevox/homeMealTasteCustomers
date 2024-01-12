@@ -324,7 +324,7 @@ export const getAllDishType = async () => {
     const response = await axios.get(
       "https://homemealtaste.azurewebsites.net/api/DishType/get-all-dish-type"
     );
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.log("get all dishtype error", error);
   }
@@ -593,7 +593,7 @@ export const createUserCustomer = async (values) => {
 export const getAllSessionWithStatusAndBookingSlotTrue = async () => {
   try {
     const response = await axios.get(
-      "https://homemealtaste.azurewebsites.net/api/Session/get-all-session-with-status-true-and-booking-slot-true"
+      'https://homemealtaste.azurewebsites.net/api/Session/get-all-session-with-status-booking'
     );
     return response.data;
   } catch (error) {
@@ -613,7 +613,7 @@ export const getSingleDishType = async (id) => {
 export const getAllAreaBySessionId = async (id) => {
   try {
     const response = await axios.get(
-      `https://homemealtaste.azurewebsites.net/api/Area/get-all-area-by-session-id?sessionId=${id}`
+      `https://homemealtaste.azurewebsites.net/api/Area/get-all-area-by-session-id-for-customer?sessionId=${id}`
     );
     return response.data;
   } catch (error) {

@@ -236,34 +236,6 @@ const RegisterScreen = ({ navigation }) => {
             borderColor: "grey",
             borderWidth: 1,
             borderRadius: 10,
-          }}
-        >
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Ionicons name="location-outline" size={20}></Ionicons>
-          </View>
-          <View style={{ padding: 15 }}>
-            <TextInput
-              width={280}
-              placeholder="Your Address"
-              // value={email}
-              onChangeText={
-                (text) =>
-                  setValues({
-                    ...values,
-                    address: text,
-                  })
-              }
-            ></TextInput>
-          </View>
-        </View>
-        <View
-          style={{
-            paddingLeft: 10,
-            marginHorizontal: 40,
-            flexDirection: "row",
-            borderColor: "grey",
-            borderWidth: 1,
-            borderRadius: 10,
             marginTop:10
           }}
         >
