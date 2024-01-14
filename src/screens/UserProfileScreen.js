@@ -132,16 +132,6 @@ console.log("wallllllllet", profile)
                   <Ionicons name="chevron-forward-outline" size={20} />
                 </View>
               </TouchableOpacity>
-              <View>
-                <Ionicons
-                  name="location-outline"
-                  size={20}
-                  paddingVertical={20}
-                >
-                  {" "}
-                  My Adress : {profile?.address}
-                </Ionicons>
-              </View>
               <Ionicons name="call-outline" size={20} paddingVertical={20}>
                 {" "}
                 Phone : {profile?.phone}{" "}

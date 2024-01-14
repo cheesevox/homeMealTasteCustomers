@@ -115,17 +115,6 @@ const EditUserProfileScreen = ({ navigation, route }) => {
           }
         ></TextInput>
         <TextInput
-          placeholder={profile?.profile?.username ? profile.profile.username : 'User Name'}
-          style={{ marginVertical: 20, marginHorizontal: 40 }}
-          value={values.username}
-          onChangeText={(text) =>
-            setValues({
-              ...values,
-              username: text,
-            })
-          }
-        ></TextInput>
-        <TextInput
           label="Phone"
           placeholder={profile?.profile?.username}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
@@ -154,20 +143,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-        <TextInput
-          label="Address"
-          placeholder={profile?.profile?.address}
-          style={{ marginVertical: 20, marginHorizontal: 40 }}
-          value={values.address}
-          onChangeText={(text) =>
-            setValues({
-              ...values,
-              address: text,
-            })
-          }
-        ></TextInput>
         <Dropdown
-          // style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
           style={{
             backgroundColor: "white",
             border: "none",
@@ -185,6 +161,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
           labelField="districtName"
           valueField="districtId"
           value={values.districtId}
+          placeholder={profile?.profile?.districtDto?.districtName}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item) => {
@@ -196,6 +173,7 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             setIsFocus(false);
           }}
         ></Dropdown>
+
       </View>
 
       <View

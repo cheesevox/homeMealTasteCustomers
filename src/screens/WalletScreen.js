@@ -70,13 +70,12 @@ const WalletScreen = ({ navigation, route }) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-  <Modal isVisible={isModalVisible}>
-    <View style={{ flex: 1 }}>
-      <Text>{}$</Text>
-      <Button title="You rechard success" onPress={toggleModal} />
-    </View>
-  </Modal>
-
+  // <Modal isVisible={isModalVisible}>
+  //   <View style={{ flex: 1 }}>
+  //     <Text>{}$</Text>
+  //     <Button title="You rechard success" onPress={toggleModal} />
+  //   </View>
+  // </Modal>
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <HeaderComp label="Wallet" onBack={() => navigation.goBack()} />
