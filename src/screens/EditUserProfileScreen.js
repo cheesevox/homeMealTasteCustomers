@@ -124,19 +124,24 @@ const EditUserProfileScreen = ({ navigation, route }) => {
               username: text,
             })
           }
-        ></TextInput> 
+        ></TextInput>
         <TextInput
           label="Phone"
           placeholder={profile?.profile?.username}
           style={{ marginVertical: 20, marginHorizontal: 40 }}
           value={values.phone}
-          onChangeText={(text) =>
-            setValues({
-              ...values,
-              phone: text,
-            })
-          }
-        ></TextInput>
+          onChangeText={(text) => {
+            // Remove non-numeric characters
+            const numericValue = text.replace(/[^0-9]/g, '');
+            // Check if the numeric value has 10 digits
+            if (numericValue.length = 10) {
+              setValues({
+                ...values,
+                phone: numericValue,
+              });
+            }
+          }}
+        />
         <TextInput
           label="Email"
           placeholder={profile?.profile?.email}
@@ -161,7 +166,6 @@ const EditUserProfileScreen = ({ navigation, route }) => {
             })
           }
         ></TextInput>
-
         <Dropdown
           // style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
           style={{

@@ -26,6 +26,7 @@ const LoginScreen = ({ navigation,route }) => {
   const [values, setValues] = useState({
     phone: null,
     password: null,
+    DeviceToken : null
   });
   const Login = () => {
     login(values, navigation, Toast)

@@ -108,7 +108,7 @@ const FoodListScreen = ({ navigation, route }) => {
   };
   const fetchAllDishType = () => {
     getAllDishType().then((res) => {
-      console.log("newwwwwwwwwwwwwwwwww",res);
+      console.log("newwwwwwwwwwwwwwwwww", res);
       setDishType(res);
     });
   };
@@ -254,7 +254,7 @@ const FoodListScreen = ({ navigation, route }) => {
         {/* sessiion filter */}
       </View>
       {/* dish types */}
-      <ScrollView
+      <View
         style={{
           height: "75%",
         }}
@@ -306,18 +306,20 @@ const FoodListScreen = ({ navigation, route }) => {
             }}
           >
             <FlatList
-              style={{ gap: 5 }}
+              style={{ gap: 5, height:'62%' }}
               showsVerticalScrollIndicator={false}
               numColumns={1}
               data={sessions}
               keyExtractor={(item) => item.sessionId}
               renderItem={(item) => (
-                <SessionCard session={item} navigation={navigation} />
+                <View style={{ marginBottom: 5 }}>
+                  <SessionCard session={item} navigation={navigation} />
+                </View>
               )}
             ></FlatList>
           </View>
         </View>
-      </ScrollView>
+      </View>
       {/* </View> */}
     </SafeAreaView>
   );

@@ -198,7 +198,7 @@ export const getAllAreaByDistrictId = async (id) => {
     );
     console.log("tra ve area cho kaooooooooooo", response.data);
     return response.data;
-  } catch (error) {
+  } catch (error) { 
     console.log("error in getall area by district");
   }
 };

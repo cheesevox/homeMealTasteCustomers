@@ -51,8 +51,15 @@ const MealSession = ({ navigation, route }) => {
   };
   const fetchAllAreaInSession = () => {
     getAllAreaBySessionId(sessionId).then((res) => {
-      setArea(res);
-    });
+      const defaultArea = { areaId: 'defaultAreaId', areaName: 'Default Area' };
+      const areasWithDefault = [defaultArea, ...res];
+  
+      // Set the modified array using setArea
+      setArea(areasWithDefault);
+    })
+    // getAllAreaBySessionId(sessionId).then((res) => {
+    //   setArea(res);
+    // });
   };
   // const filteredMealSession = mealSession.filter(
   //   (item) =>
@@ -63,20 +70,23 @@ const MealSession = ({ navigation, route }) => {
     fetchAllAreaInSession();
   }, [sessionId]);
 
-  useEffect(() => {
-    // fetchAllSessionByAreaId();
-    // fetchAllSessionTrueByAreaId();
-    console.log(value);
-    let filteredData = [...mealSession];
-    if (value) {
-      filteredData = mealSession.filter((item) => {
-        return (
-          item.kitchenDtoForMealSession?.areaDtoForMealSession?.areaId == value
-        );
-      });
-    }
-    setNewData(filteredData);
-  }, [value]);
+  // useEffect(() => {
+  //   // fetchAllSessionByAreaId();
+  //   // fetchAllSessionTrueByAreaId();
+  //   let filteredData = [...mealSession];
+  //   if (value) {
+  //     filteredData = mealSession.filter((item) => {
+  //       return (
+  //         item.kitchenDtoForMealSession?.areaDtoForMealSession?.areaId == value
+  //       );
+  //     });
+  //   } else  { // Adjust this condition based on your default areaId
+  //     setNewData(mealSession);
+  //     return; // Exit the useEffect early
+  //   }
+  
+  //   setNewData(filteredData);
+  // }, [value]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -103,17 +113,22 @@ const MealSession = ({ navigation, route }) => {
           placeholder="Select Area"
           value={value}
           onChange={(item) => {
+            // setValue(item.areaId);
             console.log(item);
             setValue(item.areaId);
+            // Check if the selected area is the default area
+            if (item.areaId === 'defaultAreaId') {
+              setNewData(mealSession); // Show all meals when the default area is selected
+            } else {
+              // Filter meals based on the selected area
+              const filteredData = mealSession.filter((meal) => (
+                meal.kitchenDtoForMealSession?.areaDtoForMealSession?.areaId === item.areaId
+              ));
+              setNewData(filteredData);
+            }
           }}
         />
-        {/* <ScrollView style={styles.body}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {filteredMealSession?.map((item, index) => (
-              <FoodCard item={item} key={index} />
-            ))}
-          </ScrollView>
-        </ScrollView> */}
+
         <FlatList
           numColumns={2}
           data={value ? newData : mealSession}

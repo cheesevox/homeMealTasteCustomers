@@ -19,7 +19,6 @@ import { StatusBar } from "react-native";
 const OrderScreen = ({ navigation }) => {
   const [order, setOrder] = useState([]);
   const user = useSelector((state) => state.user.user);
-
   const fectOrderByCustomerId = () => {
     getAllOrderByCutomerId(user.customerId).then((res) => {
       setOrder(res);
