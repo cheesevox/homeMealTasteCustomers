@@ -7,7 +7,7 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import ToastMessage from "../components/ToastMessage";
 import { useRef } from "react";
@@ -15,9 +15,10 @@ import { login } from "../Api";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfor } from "../../slices/userSlice";
 import Toast from "react-native-toast-message";
-const LoginScreen = ({ navigation,route }) => {
-    const user = useSelector((state)=>state.user.user)
-
+// import { useToken } from '../TokenContext';
+import messaging from '@react-native-firebase/messaging';
+const LoginScreen = ({ navigation, route }) => {
+  const user = useSelector((state) => state.user.user)
   const dispatch = useDispatch();
   // collect data
   const [phone, setPhone] = useState("");
@@ -26,7 +27,6 @@ const LoginScreen = ({ navigation,route }) => {
   const [values, setValues] = useState({
     phone: null,
     password: null,
-    DeviceToken : null
   });
   const Login = () => {
     login(values, navigation, Toast)
@@ -61,7 +61,6 @@ const LoginScreen = ({ navigation,route }) => {
       })
     }
   }, [route.params]);
-
   return (
     <View
       style={{

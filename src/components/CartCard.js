@@ -9,13 +9,16 @@ import {
 } from "react-native";
 import React from "react";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import { imageorder } from "../Constant";
+import { imageorder, order } from "../Constant";
 import { useNavigation } from "@react-navigation/native";
 
-const CartCard = ({ item }) => {
+const   CartCard = ({ item }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.cartcard}>
+      <TouchableOpacity 
+      onPress={() => navigation.navigate("OrderCancel",  item?.orderId )}
+      >
       <View
         style={{
           alignItems: "center",
@@ -99,31 +102,34 @@ const CartCard = ({ item }) => {
           </View>
         </View>
       </View>
-
       <View
         style={{
-          marginRight: 20,
           alignItems: "center",
-          padding: 10,
-          borderRadius: 25,
-          backgroundColor: "#FFAB01",
+          margin:20
         }}
       >
-        <TouchableOpacity
-          style={{ paddingHorizontal: 10 }}
-          onPress={() => navigation.navigate("Feedback", { item })}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontFamily: "Poppins",
-              fontSize: 18,
-            }}
+        {(item.status == 'COMPLETED') && (
+          <TouchableOpacity
+            style={{ paddingHorizontal: 10, 
+          backgroundColor: "#FFAB01",
+          padding: 10,
+          borderRadius: 20,
+        }}
+            onPress={() => navigation.navigate("Feedback", { item })}
           >
-            Review
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Poppins",
+                fontSize: 18,
+              }}
+            >
+              Review
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
+      </TouchableOpacity>
     </View>
   );
 };

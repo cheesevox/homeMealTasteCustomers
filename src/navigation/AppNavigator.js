@@ -26,6 +26,7 @@ import ChefHomeViewScreen from "../screens/ChefHomeViewScreen";
 import PrivacyScreen from "../screens/PrivacyScreen";
 import TransactionScreen from "../screens/TransactionScreen";
 import DishTypeDetailScreen from "../screens/DishTypeDetailScreen";
+import OrderCancelScreen from "../OrderCancelScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +57,8 @@ const AppNavigator = () => {
         <Stack.Screen name="ChefHomeView" component={ChefHomeViewScreen} />
         <Stack.Screen name="Privacy" component={PrivacyScreen} />
         <Stack.Screen name="Transaction" component={TransactionScreen} />
+        <Stack.Screen name="OrderCancel" component={OrderCancelScreen} />
+
         <Stack.Screen
           name="DishTypeDetailScreen"
           component={DishTypeDetailScreen}

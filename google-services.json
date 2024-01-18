@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "94685895794",
-    "project_id": "push-notification-81015",
-    "storage_bucket": "push-notification-81015.appspot.com"
+    "project_number": "62879434393",
+    "project_id": "homemealtaste-2f322",
+    "storage_bucket": "homemealtaste-2f322.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:94685895794:android:e54fb870916eb42614b6eb",
+        "mobilesdk_app_id": "1:62879434393:android:27fcd3e0b85c82d7e5da08",
         "android_client_info": {
-          "package_name": "com.cheese.homemealtaste"
+          "package_name": "com.anonymous.homemealtaste"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCX3JPjHFRuXvIXaik4lXMm16d8_Lbjaeg"
+          "current_key": "AIzaSyCZ7jSSqGNXqUqHHzT0ozPKMja0Hay3GjY"
         }
       ],
       "services": {

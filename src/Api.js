@@ -58,24 +58,15 @@ export const loginUser = () => {
     console.log("login error in here");
   }
 };
-// <<<<<<< HEAD
-// export const getOrderByID = async (id) => {
-//   try {
-//     const repose = await axios.get(
-// =======
-export const getOrderByID = (id) => {
+export const getOrderByID = async (id) => {
   try {
-    const repose = axios
-      .get
-      // >>>>>>> CaoVanTruong/chef
-      //       `https://homemealtaste.azurewebsites.net/api/Order/get-order-by-order-id?id=${id}`
-      ();
-    return repose.data;
+    const response = await axios.get(`https://homemealtaste.azurewebsites.net/api/Order/get-order-by-order-id?id=${id}`);
+    return response.data;
   } catch (error) {
-    console.log("error by id get order");
+    console.log("Error getting order by ID:", error);
+    throw error; // Re-throw the error to handle it further if needed
   }
 };
-// <<<<<<< HEAD
 
 export const getAllMealInSessionID = async (id) => {
   try {
@@ -618,5 +609,16 @@ export const getAllAreaBySessionId = async (id) => {
     return response.data;
   } catch (error) {
     console.log("Error at get all area by session id", error);
+  }
+};
+
+export const postStatusOrderFromCustomer = async (id) => {
+  try {
+    console.log("posrtttttttttt id", id);
+    await axios.patch(
+      `https://homemealtaste.azurewebsites.net/api/Order/change-status-order-to-cancelled-when-order-is-paid-by-customer?orderId=${id}`
+    );
+  } catch (error) {
+    console.log("post status for order customer", error);
   }
 };

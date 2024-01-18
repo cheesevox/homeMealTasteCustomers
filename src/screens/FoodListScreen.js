@@ -49,6 +49,7 @@ const FoodListScreen = ({ navigation, route }) => {
   const [districtId, setDistrictId] = useState(1);
   const [isFocus, setIsFocus] = useState(false);
   const [sessions, setSessions] = useState([]);
+
   // const loadFontsAsync = async () => {
   //   await
   // };
@@ -108,7 +109,7 @@ const FoodListScreen = ({ navigation, route }) => {
   };
   const fetchAllDishType = () => {
     getAllDishType().then((res) => {
-      console.log("newwwwwwwwwwwwwwwwww", res);
+      // console.log("newwwwwwwwwwwwwwwwww", res);
       setDishType(res);
     });
   };
@@ -124,16 +125,15 @@ const FoodListScreen = ({ navigation, route }) => {
     fetchAllDishType();
     fetchAllSession();
   }, []);
+  useEffect(() => {
+    const fetchData = () => {
+      fetchAllSession()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return () => clearInterval(intervalId)
+  }, []);
 
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", () => {
-  //     fectchAllAreaByDistrictId(districtId);
-  //     fetchAllSessionByAreaId(districtId);
-  //     fectchAllAreaByDistrictId(districtId);
-  //     setDistrictId(districtId);
-  //   });
-  //   return unsubscribe; // Cleanup
-  // }, [navigation]);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View
@@ -306,7 +306,7 @@ const FoodListScreen = ({ navigation, route }) => {
             }}
           >
             <FlatList
-              style={{ gap: 5, height:'62%' }}
+              style={{ gap: 5, height: '62%' }}
               showsVerticalScrollIndicator={false}
               numColumns={1}
               data={sessions}

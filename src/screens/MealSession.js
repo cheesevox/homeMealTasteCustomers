@@ -45,7 +45,7 @@ const MealSession = ({ navigation, route }) => {
   
   const fetchAllMealSessionBySessionId = () => {
     getAllApprovedMealSessionBySessionId(sessionId).then((res) => {
-      console.log("RESSSSSSSSSSSSSSSS",res)
+      // console.log("RESSSSSSSSSSSSSSSS",res)
       setMealSession(res);
     });
   };
@@ -84,7 +84,6 @@ const MealSession = ({ navigation, route }) => {
   //     setNewData(mealSession);
   //     return; // Exit the useEffect early
   //   }
-  
   //   setNewData(filteredData);
   // }, [value]);
 
@@ -96,6 +95,17 @@ const MealSession = ({ navigation, route }) => {
     return unsubscribe;
   }, [navigation]);
 
+  useEffect(() => {
+    const fetchData = ()=>{
+      // fetchAllSessionByAreaId(area);
+      fetchAllMealSessionBySessionId();
+      fetchAllAreaInSession();
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return()=> clearInterval(intervalId)
+  }, []);
+  
   return (
     <SafeAreaView style={styles.container}>
       <HeaderComp label="Meal's Market" onBack={() => navigation.goBack()} />
@@ -113,14 +123,10 @@ const MealSession = ({ navigation, route }) => {
           placeholder="Select Area"
           value={value}
           onChange={(item) => {
-            // setValue(item.areaId);
             console.log(item);
             setValue(item.areaId);
-            // Check if the selected area is the default area
             if (item.areaId === 'defaultAreaId') {
-              setNewData(mealSession); // Show all meals when the default area is selected
             } else {
-              // Filter meals based on the selected area
               const filteredData = mealSession.filter((meal) => (
                 meal.kitchenDtoForMealSession?.areaDtoForMealSession?.areaId === item.areaId
               ));
@@ -128,7 +134,6 @@ const MealSession = ({ navigation, route }) => {
             }
           }}
         />
-
         <FlatList
           numColumns={2}
           data={value ? newData : mealSession}
