@@ -12,123 +12,119 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { imageorder, order } from "../Constant";
 import { useNavigation } from "@react-navigation/native";
 
-const   CartCard = ({ item }) => {
+const CartCard = ({ item }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.cartcard}>
-      <TouchableOpacity 
-      onPress={() => navigation.navigate("OrderCancel",  item?.orderId )}
-      >
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          flex: 1,
-        }}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("OrderCancel", item?.orderId)}
       >
         <View
           style={{
-            flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
+            flex: 1,
+            flexDirection: "row"
           }}
         >
-          <Image
-            style={{
-              width: "30%",
-              height: 100,
-              borderRadius: 10,
-              resizeMode: "cover",
-            }}
-            source={{ uri: item?.mealSessionDto2?.mealDto2?.image }}
-          />
           <View
             style={{
-              width: "65%",
-              flexDirection: "column",
-              padding: 15,
-              justifyContent: "space-between",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              width: '100%'
             }}
           >
-            <Text
+            <Image
               style={{
-                fontSize: 20,
-                fontFamily: "Poppins",
+                width: "30%",
+                height: 100,
+                borderRadius: 10,
+                resizeMode: "cover",
+              }}
+              source={{ uri: item?.mealSessionDto2?.mealDto2?.image }}
+            />
+            <View
+              style={{
+                width: "65%",
+                flexDirection: "column",
+                padding: 15,
+                justifyContent: "space-between",
               }}
             >
-              {/* name order  */}
-              {item?.mealSessionDto2?.mealDto2?.name}
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Poppins",
-              }}
-            >
-              Total: {item?.totalPrice} VND
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Poppins",
-              }}
-            >
-              Date: {item?.time}
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Poppins",
-              }}
-            >
-              Booked Slot : {item?.quantity}
-            </Text>
-            {/* <View
-              style={{
-                borderRadius: 20,
-                paddingVertical: 5,
-                elevation: 5,
-                backgroundColor: "white",
-                borderWidth: 0.2,
-                borderColor: "blue",
-                width: "auto",
-              }}
-            > */}
-            <Text
-              style={{
-                fontFamily: "Poppins",
-              }}
-            >
-              {item?.status}
-            </Text>
-            {/* </View> */}
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Poppins",
+                }}
+              >
+                {/* name order  */}
+                {item?.mealSessionDto2?.mealDto2?.name}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Poppins",
+                }}
+              >
+                Total: {item?.totalPrice} VND
+              </Text>
+
+              <Text
+                style={{
+                  fontFamily: "Poppins",
+                }}
+              >
+                Booked Slot : {item?.quantity}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Poppins",
+                }}
+              >
+                {item?.status}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Poppins",
+                }}
+              >
+                Date: {item?.time}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-      <View
-        style={{
-          alignItems: "center",
-          margin:20
-        }}
-      >
-        {(item.status == 'COMPLETED') && (
-          <TouchableOpacity
-            style={{ paddingHorizontal: 10, 
-          backgroundColor: "#FFAB01",
-          padding: 10,
-          borderRadius: 20,
-        }}
-            onPress={() => navigation.navigate("Feedback", { item })}
-          >
-            <Text
+        <View
+          style={{
+            elevation: 5,
+            margin: 10,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          {(item.status == 'COMPLETED') && (
+            <TouchableOpacity
               style={{
-                color: "white",
-                fontFamily: "Poppins",
-                fontSize: 18,
+                backgroundColor: "#FFAB01",
+                padding: 10,
+                borderRadius: 20,
+                width: '50%',
+                alignItems:"center"
               }}
+              onPress={() => navigation.navigate("Feedback", { item })}
             >
-              Review
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
+              <Text
+                style={{
+                  color: "white",
+                  fontFamily: "Poppins",
+                  fontSize: 18,
+                  alignItems: "center"
+                }}
+              >
+                Review
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </TouchableOpacity>
     </View>
   );

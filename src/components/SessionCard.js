@@ -47,9 +47,9 @@ export default function SessionCard({ session, navigation }) {
         {session?.item.sessionType == "Lunch" ? (
           <Ionicons name="sunny-outline" size={40} color="orange" />
         ) : session?.item.sessionType == "Evening" ? (
-          <Ionicons name="moon-outline" size={30} color="purple" />
+          <Ionicons name="moon-outline" size={25} color="purple" />
         ) : (
-          <Ionicons name="moon-sharp" size={30} />
+          <Ionicons name="moon-sharp" size={25} />
         )}
       </View>
       <View
@@ -67,12 +67,12 @@ export default function SessionCard({ session, navigation }) {
             display: "flex",
             flexDirection: "row",
             width: "100%",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
           }}
         >
           <View
             style={{
-              padding: 10,
+              padding: 8,
               backgroundColor: "white",
               borderRadius: 100,
               display: "flex",
@@ -80,13 +80,10 @@ export default function SessionCard({ session, navigation }) {
               justifyContent: "center",
             }}
           >
-            <Ionicons name="md-lock-open-sharp" size={15} color="green" />
-
             <Text
               style={{
                 color: "black",
                 fontFamily: "Poppins",
-                marginHorizontal: 5,
               }}
             >
               Start Time : {session.item?.startTime}
@@ -94,7 +91,7 @@ export default function SessionCard({ session, navigation }) {
           </View>
           <View
             style={{
-              padding: 10,
+              padding: 8,
               backgroundColor: "white",
               borderRadius: 100,
               display: "flex",
@@ -102,13 +99,11 @@ export default function SessionCard({ session, navigation }) {
             }}
           >
             <View>
-              <Ionicons name="md-lock-closed-sharp" size={15} color="green" />
             </View>
             <Text
               style={{
                 color: "black",
                 fontFamily: "Poppins",
-                marginHorizontal: 5,
               }}
             >
               End Time : {session.item?.endTime}

@@ -17,16 +17,30 @@ import { getUserInfor } from "../../slices/userSlice";
 import Toast from "react-native-toast-message";
 // import { useToken } from '../TokenContext';
 import messaging from '@react-native-firebase/messaging';
-const LoginScreen = ({ navigation, route }) => {
+const LoginScreen = ({ navigation, route, props }) => {
   const user = useSelector((state) => state.user.user)
   const dispatch = useDispatch();
   // collect data
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+      messaging().getToken().then(token => {
+        console.log("tokennnnnnnnn login page", token)
+        setToken(token)
+        setValues({
+          ...values,
+          DeviceToken: token
+        })
+      })
+    }, [])
+
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [values, setValues] = useState({
     phone: null,
     password: null,
+    DeviceToken : null
   });
   const Login = () => {
     login(values, navigation, Toast)

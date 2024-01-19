@@ -128,6 +128,7 @@ const FoodListScreen = ({ navigation, route }) => {
   useEffect(() => {
     const fetchData = () => {
       fetchAllSession()
+      fetchAllDishType()
     }
     fetchData()
     const intervalId = setInterval(fetchData, 5000)

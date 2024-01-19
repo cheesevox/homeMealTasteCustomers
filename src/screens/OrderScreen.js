@@ -36,6 +36,14 @@ const OrderScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+  useEffect(() => {
+    const fetchData = () => {
+      fectOrderByCustomerId()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return () => clearInterval(intervalId)
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />

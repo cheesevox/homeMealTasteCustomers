@@ -25,7 +25,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [profile, setProfile] = useState();
-console.log("USERRRRRR",user)
+// console.log("USERRRRRR",user)
   const fectProfileByCustomerId = () => {
     getUserByID(user?.userId).then((res) => {
       setProfile(res);
@@ -44,6 +44,15 @@ console.log("USERRRRRR",user)
     return unsubscribe;
   }, [navigation]);
 
+  useEffect(() => {
+    const fetchData = () => {
+      fectProfileByCustomerId()
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 5000)
+    return () => clearInterval(intervalId)
+  }, []);
+
   const handleLogout = () => {
     navigation.navigate("Login");
     Toast.show({
@@ -54,13 +63,11 @@ console.log("USERRRRRR",user)
     setTimeout(() => {
       Toast.hide();
     }, 5000);
-
-    // Navigate back after hiding the toast
     setTimeout(() => {
       navigation.goBack();
     }, 5100);
   };
-console.log("wallllllllet", profile)
+// console.log("wallllllllet", profile)
   return (
     <SafeAreaView
       style={{

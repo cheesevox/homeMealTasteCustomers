@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import * as Font from "expo-font";
 import { firebase } from '@react-native-firebase/app';
 import { initializeMessaging } from './src/firebaseConfig'; // Import initializeMessaging function
+import LoginScreen from "./src/screens/LoginScreen";
+import PushNotification from "react-native-push-notification";
 export default function App() {
 
   // const initializeFirebase = () => {
@@ -23,6 +25,13 @@ export default function App() {
   //     });
   //   }
   // };
+
+  // PushNotification.configure({
+  //   onNotification: function (notification) {
+  //     console.log('Notification received:', notification);
+  //   },
+  // });
+
   async function requestUserPermission() {
     const authStatus = await messaging().requestPermission();
     const enabled =
@@ -32,15 +41,16 @@ export default function App() {
       console.log('Authorization status:', authStatus);
     }
   }
-  useEffect(()=>{
-      if(requestUserPermission()){
-        messaging().getToken().then(token=>{
+
+  useEffect(() => {
+    if (requestUserPermission()) {
+      messaging().getToken().then(token => {
         console.log("tokennnnnnnnn", token)
-        })
-      }else{
-        console.log("repo request token is falseeeeeeeeeeeeeeeee", authStatus)
-      }
-      messaging()
+      })
+    } else {
+      console.log("repo request token is falseeeeeeeeeeeeeeeee", authStatus)
+    }
+    messaging()
       .getInitialNotification()
       .then(async (remoteMessage) => {
         if (remoteMessage) {
@@ -50,21 +60,23 @@ export default function App() {
           );
         }
       });
-      messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        );
-      });
-      messaging().setBackgroundMessageHandler(async remoteMessage => {
-        console.log('Message handled in the background!', remoteMessage);
-      });
-      const unsubscribe = messaging().onMessage(async remoteMessage => {
-        Alert.alert('HOME MEAL TASTE!', JSON.stringify(remoteMessage));
-      });
-      return unsubscribe;
-    },[])
 
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+    });
+
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!', remoteMessage);
+      const { title, body } = remoteMessage.data;
+    });
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('HOME MEAL TASTE!', JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+  }, [])
   Font.loadAsync({
     Poppins: require("./assets/fonts/Poppins-Bold.ttf"),
   });

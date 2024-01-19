@@ -34,15 +34,14 @@ const WebScreen = ({ route, navigation }) => {
         if (isInitialURL && isBackNavigation) {
           navigation.goBack();
         } else if (responseCode === "00") {
-          navigation.navigate("UserProfile");
-          
+          navigation.goBack();
           Toast.show({
             type: "success",
             text1: "Home Meal Taste",
             text2: "Rechard Tracsaction Successfully.",
           });
         } else if(responseCode === "24"){
-          navigation.navigate("UserProfile");
+          navigation.goBack();
           Toast.show({
             type: "error",
             text1: "Home Meal Taste",
