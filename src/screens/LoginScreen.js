@@ -15,14 +15,14 @@ import { login } from "../Api";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfor } from "../../slices/userSlice";
 import Toast from "react-native-toast-message";
-// import { useToken } from '../TokenContext';
+import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 const LoginScreen = ({ navigation, route, props }) => {
   const user = useSelector((state) => state.user.user)
   const dispatch = useDispatch();
   // collect data
   const [token, setToken] = useState();
-
+  const [confirmCode, setConfirmCode] = useState(null);
   useEffect(() => {
       messaging().getToken().then(token => {
         console.log("tokennnnnnnnn login page", token)
@@ -33,7 +33,25 @@ const LoginScreen = ({ navigation, route, props }) => {
         })
       })
     }, [])
-
+    const sendOTP = async () => {
+      try {
+        const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+        setConfirmCode(confirmation);
+        // You can use confirmation.confirm(code) to confirm the code later
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'Failed to send OTP');
+      }
+    };
+    const confirmOTP = async (code) => {
+      try {
+        await confirmCode.confirm(code);
+        // Authentication successful, navigate to the next screen
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'Invalid OTP');
+      }
+    };
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -219,7 +237,7 @@ const LoginScreen = ({ navigation, route, props }) => {
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Text style={{ marginTop: 50 }}>If You Don't Have An Account ?</Text>
-          <View>
+          <View style={{flexDirection:"row", justifyContent:"space-between", width:'100%'}}>
             <TouchableOpacity
               onPress={() => navigation.navigate("Regiter")}
               style={{

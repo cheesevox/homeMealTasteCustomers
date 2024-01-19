@@ -12,6 +12,7 @@ import { firebase } from '@react-native-firebase/app';
 import { initializeMessaging } from './src/firebaseConfig'; // Import initializeMessaging function
 import LoginScreen from "./src/screens/LoginScreen";
 import PushNotification from "react-native-push-notification";
+import auth from '@react-native-firebase/auth';
 export default function App() {
 
   // const initializeFirebase = () => {
@@ -45,7 +46,7 @@ export default function App() {
   useEffect(() => {
     if (requestUserPermission()) {
       messaging().getToken().then(token => {
-        console.log("tokennnnnnnnn", token)
+        // console.log("tokennnnnnnnn", token)
       })
     } else {
       console.log("repo request token is falseeeeeeeeeeeeeeeee", authStatus)

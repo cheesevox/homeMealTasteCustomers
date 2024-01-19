@@ -12,7 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "plugins": [],
+    "plugins":["@react-native-firebase/app", "@react-native-firebase/auth"],
     "assetBundlePatterns": [
       "**/*"
     ],
